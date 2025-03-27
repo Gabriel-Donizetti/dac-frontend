@@ -4,24 +4,32 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { HomeView } from './modules/home'
 import { ClienteRoutes, AuthProvider } from './modules/cliente'
+import Login from './modules/login/Login';
+import Register from './modules/login/Register';
 
-// Criação do router principal
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeView />
   },
   {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/register",
+    element: <Register />
+  },
+  {
     path: "/cliente/*", // Note o /* para permitir sub-rotas
     element: (
-      <AuthProvider> {/* Envolve as rotas do cliente com o provedor de autenticação */}
+      <AuthProvider> 
         <ClienteRoutes />
       </AuthProvider>
     )
   }
 ])
 
-// Renderização da aplicação
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
