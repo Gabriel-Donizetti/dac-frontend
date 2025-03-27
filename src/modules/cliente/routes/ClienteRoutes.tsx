@@ -25,23 +25,27 @@ export default function ClienteRoutes() {
       <Route path="/login" element={
         isAuthenticated ? <Navigate to="/cliente/reservas" /> : <LoginView />
       } />
-      
+
       <Route element={<ProtectedLayout />}>
         <Route path="/reservas" element={
           isAuthenticated ? <ReservaVooView /> : <Navigate to="/cliente/login" />
         } />
-        
+
         <Route path="/minhas-reservas" element={
           isAuthenticated ? <MinhasReservasView /> : <Navigate to="/cliente/login" />
         } />
-        
+
         <Route path="/perfil" element={
           isAuthenticated ? <PerfilView /> : <Navigate to="/cliente/login" />
         } />
       </Route>
-      
+
       <Route path="/" element={
         <Navigate to={isAuthenticated ? "/cliente/reservas" : "/cliente/login"} />
+      } />
+
+      <Route path="/initial-page" element={
+        <InitialPageView />
       } />
     </Routes>
   );
