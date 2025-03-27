@@ -7,6 +7,7 @@ import LoginView from '../pages/LoginView';
 import ReservaVooView from '../pages/ReservaVooView';
 import MinhasReservasView from '../pages/MinhasReservasView';
 import PerfilView from '../pages/PerfilView';
+import InitialPageView from '../pages/InitialPageView';
 
 function ProtectedLayout() {
   return (
