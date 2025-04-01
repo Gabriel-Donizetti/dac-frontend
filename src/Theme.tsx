@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
-export const theme = createTheme({
+export const Theme = createTheme({
     palette: {
         primary: {
             main: "#2f4156",

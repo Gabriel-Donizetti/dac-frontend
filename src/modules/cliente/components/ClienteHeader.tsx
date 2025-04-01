@@ -1,20 +1,31 @@
-import { useAuth } from '../contexts/AuthContext';
+// modules/cliente/components/ClienteHeader.tsx
+import { useAuth } from '../../../shared/contexts/AuthContext';
+import { Button } from '@mui/material';
 
-function ClienteHeader() {
+export function ClienteHeader() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="cliente-header">
-      <div className="logo">Sua Viagem</div>
+    <header style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '1rem',
+      backgroundColor: '#f0f0f0'
+    }}>
+      <div style={{ fontSize: '1.5rem' }}>Sua Viagem</div>
       
       {user && (
-        <nav>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <span>Olá, {user.nome}</span>
-          <button onClick={logout}>Sair</button>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            onClick={logout}
+          >
+            Sair
+          </Button>
         </nav>
       )}
     </header>
   );
 }
-
-export default ClienteHeader;

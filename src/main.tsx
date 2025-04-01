@@ -1,37 +1,42 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { HomeView } from './modules/home'
-import { ClienteRoutes, AuthProvider } from './modules/cliente'
-import Login from './modules/login/Login';
-import Register from './modules/login/Register';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './shared/contexts/AuthContext';
+import { PrivateRoute } from './shared/components/PrivateRoute';
+import { HomeView } from './modules/home';
+import { LoginView } from './modules/auth/pages/LoginView';
+import { ClienteRoutes } from './modules/cliente';
+import { ThemeProvider } from '@mui/material/styles';
+import { Theme } from './Theme';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeView />
   },
   {
-    path: "/login",
-    element: <Login />
+    path: '/login',
+    element: <LoginView />
   },
   {
-    path: "/register",
-    element: <Register />
-  },
-  {
-    path: "/cliente/*", // Note o /* para permitir sub-rotas
-    element: (
-      <AuthProvider> 
-        <ClienteRoutes />
-      </AuthProvider>
-    )
+    path: '/cliente',
+    element: <PrivateRoute allowedRoles={['client']} />, // Sem children
+    children: [
+      {
+        path: '*', // Captura todas as sub-rotas
+        element: <ClienteRoutes />
+      }
+    ]
   }
-])
+]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <ThemeProvider theme={Theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>
-)
+);

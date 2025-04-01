@@ -1,53 +1,40 @@
+// modules/cliente/routes/ClienteRoutes.tsx
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import ClienteHeader from '../components/ClienteHeader';
-
-// Importações normais (substitua pelos seus caminhos corretos)
-import LoginView from '../pages/LoginView';
-import ReservaVooView from '../pages/ReservaVooView';
-import MinhasReservasView from '../pages/MinhasReservasView';
+import { useAuth } from '../../../shared/contexts/AuthContext';
+import { ClienteHeader } from '../components/ClienteHeader';
+import DashboardClienteView from '../pages/ReservaDetalheView';
 import PerfilView from '../pages/PerfilView';
-import InitialPageView from '../pages/InitialPageView';
+import ReservaDetalheView from '../pages/ReservaDetalheView';
 
 function ProtectedLayout() {
   return (
     <>
       <ClienteHeader />
-      <Outlet />
+      <main style={{ padding: '1rem' }}>
+        <Outlet />
+      </main>
     </>
   );
 }
 
-export default function ClienteRoutes() {
-  const { isAuthenticated } = useAuth();
+export function ClienteRoutes() {
+  const { isAuthenticated, user } = useAuth();
+
+  // Redireciona imediatamente se não estiver autenticado ou não for cliente
+  if (!isAuthenticated || user?.role !== 'client') {
+    console.log(isAuthenticated, user?.role)
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <Routes>
-      <Route path="/login" element={
-        isAuthenticated ? <Navigate to="/cliente/reservas" /> : <LoginView />
-      } />
-
       <Route element={<ProtectedLayout />}>
-        <Route path="/reservas" element={
-          isAuthenticated ? <ReservaVooView /> : <Navigate to="/cliente/login" />
-        } />
-
-        <Route path="/minhas-reservas" element={
-          isAuthenticated ? <MinhasReservasView /> : <Navigate to="/cliente/login" />
-        } />
-
-        <Route path="/perfil" element={
-          isAuthenticated ? <PerfilView /> : <Navigate to="/cliente/login" />
-        } />
+        <Route index element={<Navigate to="perfil" replace />} />
+        <Route path="dashboard" element={<DashboardClienteView />} />
+        <Route path="reservas/:reservaId" element={<ReservaDetalheView />} />
+        <Route path="perfil" element={<PerfilView />} />
+        <Route path="*" element={<Navigate to="/cliente/perfil" replace />} />
       </Route>
-
-      <Route path="/" element={
-        <Navigate to={isAuthenticated ? "/cliente/reservas" : "/cliente/login"} />
-      } />
-
-      <Route path="/initial-page" element={
-        <InitialPageView />
-      } />
     </Routes>
   );
 }
