@@ -131,9 +131,17 @@ export const Theme = createTheme({
     },
     spacing: 4,
     components: {
+        MuiTypography:{
+            styleOverrides:{
+                root:{
+                    margin: "16px"
+                }
+            }
+        },
         MuiButton: {
             styleOverrides: {
                 root: {
+                    margin: "8px",
                     width: "100%",
                     color: "white",
                     ":hover": {

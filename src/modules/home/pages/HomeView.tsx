@@ -1,86 +1,46 @@
+import { AppBar, Toolbar, Button, Container, Typography, Box, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const HomeView = () => {
   return (
-    <div style={{ 
-      backgroundColor: "#F5EFEB", 
-      color: "#2F4156", 
-      fontFamily: "Arial, sans-serif", 
-      minHeight: "100vh", 
-      width: "100vw", 
-      margin: "0", 
-      padding: "0", 
-      display: "flex", 
-      flexDirection: "column", 
-      justifyContent: "space-between" 
+    <Box sx={{
+      color: "background",
+      minHeight: "100vh",
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
     }}>
-      <header style={{ 
-        display: "flex", 
-        padding: "10px 20px", 
-        backgroundColor: "#567C8D", 
-        width: "100%" 
-      }}>
-        <Link to="/register">
-          <button style={{ 
-            margin: "5px", 
-            padding: "10px 15px", 
-            backgroundColor: "#C8D8E6", 
-            border: "none", 
-            borderRadius: "5px", 
-            color: "#2F4156", 
-            cursor: "pointer" 
-          }}>
-            Cadastro
-          </button>
-        </Link>
-        <Link to="/login">
-          <button style={{ 
-            margin: "5px", 
-            padding: "10px 15px", 
-            backgroundColor: "#C8D8E6", 
-            border: "none", 
-            borderRadius: "5px", 
-            color: "#2F4156", 
-            cursor: "pointer" 
-          }}>
-            Login
-          </button>
-        </Link>
-        <Link to="/about">
-          <button style={{ 
-            margin: "5px", 
-            padding: "10px 15px", 
-            backgroundColor: "#C8D8E6", 
-            border: "none", 
-            borderRadius: "5px", 
-            color: "#2F4156", 
-            cursor: "pointer" 
-          }}>
-            Sobre o App
-          </button>
-        </Link>
-      </header>
+      <AppBar position="static" color="secondary">
+        <Toolbar sx={{ gap: 2, justifyContent: "flex-start" }}>
+          <IconButton href="/" edge="start" >
+            ✈️
+          </IconButton>
+          <Button component={Link} to="/register" variant="contained" sx={{ width: 200 }} >
+              Cadastro
+          </Button>
+          <Button component={Link} to="/login" variant="contained" sx={{ width: 200 }}>
+              Login
+          </Button>
+          <Button component={Link} to="/about" variant="contained" sx={{ width: 200 }}>
+              Sobre o App
+          </Button>
+        </Toolbar>
+      </AppBar>
 
-      <main style={{ 
-        textAlign: "center", 
-        padding: "20px", 
-        flexGrow: 1, 
-        width: "100%" 
-      }}>
-        <h1>Bem-vindo ao nosso site de passagens aéreas!</h1>
-        <p>Escolha sua próxima viagem e decole conosco.</p>
-        <span style={{ display: "block", fontSize: "50px" }}>✈️</span>
-      </main>
+      <Container sx={{ textAlign: "center", flexGrow: 1, py: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Bem-vindo ao nosso site de passagens aéreas!
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Escolha sua próxima viagem e decole conosco.
+        </Typography>
+        <Typography variant="h1">✈️</Typography>
+      </Container>
 
-      <footer style={{ 
-        textAlign: "center", 
-        backgroundColor: "#FFFFFF", 
-        borderTop: "1px solid gray", 
-        width: "100%" 
-      }}>
-        <p>Copyright 2025 Empresa Aérea DAC®</p>
-      </footer>
-    </div>
+      <Box component="footer" textAlign={"center"}>
+        <Typography variant="body2">&copy; 2025 Empresa Aérea DAC®</Typography>
+      </Box>
+    </Box>
   );
 };
 
