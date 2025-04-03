@@ -1,7 +1,8 @@
-// modules/cliente/views/PerfilView.tsx
 import { usePerfilViewModel } from '../view-models/usePerfilViewModel';
 import { TabelaReservas } from '../components/TabelaReservas';
 import { useNavigate } from 'react-router-dom';
+import { Box, Card, CardContent, Typography, Button } from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 function PerfilView() {
   const navigate = useNavigate();
@@ -15,35 +16,61 @@ function PerfilView() {
   if (error) return <div>Erro: {error}</div>;
   if (!user) return <div>Usuário não encontrado</div>;
 
+  const saldoMilhas = 12900;
+
   return (
-    <div className="perfil-container">
-      <div className="dados-pessoais">
-        <h2>Meu Perfil</h2>
-        <p><strong>Nome:</strong> {user.nome}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-      </div>
+    <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
+      <Box sx={{ width: 450, paddingLeft: 1, color: "white", display: "flex", flexDirection: "column", justifyContent: "start" }}>
+        <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
+          Serviços
+        </Typography>
+        {[
+          { title: "Comprar milhas", desc: "Compre milhas para usar em suas reservas de voos.", icon: "💳" },
+          { title: "Reservar voos", desc: "Pesquise e reserve voos com milhas ou dinheiro.", icon: "✈️" },
+          { title: "Consultar reserva por código", desc: "Digite o código para ver os detalhes da reserva.", icon: "🔍" },
+          { title: "Fazer check-in", desc: "Realize o check-in para os próximos voos.", icon: "✅" },
+        ].map((service, index) => (
+          <Card key={index} sx={{ mb: 2, display: "flex", alignItems: "start" }}>
+            <CardContent sx={{ p: 1 }}>
+              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                {service.icon} {service.title}
+              </Typography>
+              <Typography variant="caption">
+                {service.desc}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Box>
 
-      <div className="reservas-section">
-        <div className="reservas-header">
-          <h3>Minhas Reservas</h3>
-          <button onClick={recarregar} disabled={loading}>
-            {loading ? 'Atualizando...' : 'Atualizar'}
-          </button>
-        </div>
+      <Box sx={{ display: "flex", flexDirection: "column", width: "100vw", paddingLeft: 4, paddingRight: 8 }}>
+        <Box>
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            Saldo em milhas
+          </Typography>
+          <Typography variant="h3" sx={{ color: "#374151", fontWeight: "bold" }}>
+            {saldoMilhas.toLocaleString()}
+          </Typography>
+        </Box>
 
-        {error && <div className="error-message">{error}</div>}
-        
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="h6">Voos e Reservas</Typography>
+          <Button onClick={recarregar} variant="contained" color="primary" size="small" sx={{ width: 20, textTransform: "none" }} disabled={loading}>
+            <RefreshIcon fontSize="small"/>
+          </Button>
+        </Box>
+
+        {error && <Typography color="error">{error}</Typography>}
+
         {loading && !reservas.length ? (
-          <p>Carregando reservas...</p>
+          <Typography>Carregando reservas...</Typography>
         ) : (
-          <TabelaReservas
-            reservas={reservas}
-            onVerDetalhes={handleVerDetalhes}
-            onCancelar={cancelarReserva}
-          />
+          <Box>
+            <TabelaReservas reservas={reservas} onVerDetalhes={handleVerDetalhes} onCancelar={cancelarReserva} />
+          </Box>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

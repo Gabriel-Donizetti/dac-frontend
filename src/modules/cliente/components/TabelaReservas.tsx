@@ -1,3 +1,4 @@
+import { Table, TableHead, TableRow, TableCell, TableBody, TableContainer, Paper, Button, Typography, Box } from "@mui/material";
 import { Reserva } from '../models/ReservaTypes';
 
 interface Props {
@@ -23,66 +24,55 @@ export function TabelaReservas({
   };
 
   return (
-    <div className="tabela-reservas-container">
+    <Box>
       {saldoMilhas !== undefined && (
-        <div className="saldo-milhas">
+        <Typography variant="h6" sx={{ mb: 2 }}>
           <strong>Saldo de Milhas:</strong> {saldoMilhas.toLocaleString()}
-        </div>
+        </Typography>
       )}
 
-      <div className="tabela-wrapper">
-        <table className="tabela-reservas">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Data/Hora</th>
-              <th>Origem</th>
-              <th>Destino</th>
-              <th>Estado</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "primary.main" }}>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Código</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Data/Hora</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Origem</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Destino</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Ações</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
             {reservas.length > 0 ? (
-              reservas.map(reserva => (
-                <tr key={reserva.id}>
-                  <td>{reserva.codigo}</td>
-                  <td>{formatarData(reserva.dataHora)}</td>
-                  <td>{reserva.origem}</td>
-                  <td>{reserva.destino}</td>
-                  <td>
-                    <span className={`status-badge ${reserva.estado}`}>
-                      {reserva.estado}
-                    </span>
-                  </td>
-                  <td className="acoes">
-                    <button
-                      className="btn-ver"
-                      onClick={() => onVerDetalhes(reserva.id)}
-                    >
+              reservas.map((reserva) => (
+                <TableRow key={reserva.id}>
+                  <TableCell>{reserva.codigo}</TableCell>
+                  <TableCell>{formatarData(reserva.dataHora)}</TableCell>
+                  <TableCell>{reserva.origem}</TableCell>
+                  <TableCell>{reserva.destino}</TableCell>
+                  <TableCell sx={{ display:"flex" }}>
+                    <Button variant="outlined" size="small" sx={{ backgroundColor:"primary.main" }} onClick={() => onVerDetalhes(reserva.id)}>
                       Ver
-                    </button>
-                    {reserva.estado === 'reservada' && (
-                      <button
-                        className="btn-cancelar"
-                        onClick={() => onCancelar(reserva.id)}
-                      >
+                    </Button>
+                    {reserva.estado === "reservada" && (
+                      <Button variant="contained" size="small" color="error" onClick={() => onCancelar(reserva.id)}>
                         Cancelar
-                      </button>
+                      </Button>
                     )}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))
             ) : (
-              <tr>
-                <td colSpan={6} className="sem-registros">
+              <TableRow>
+                <TableCell colSpan={6} align="center">
                   Nenhuma reserva encontrada
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
