@@ -1,10 +1,11 @@
 // modules/cliente/routes/ClienteRoutes.tsx
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../../../shared/contexts/AuthContext';
 import { ClienteHeader } from '../components/ClienteHeader';
 import DashboardClienteView from '../pages/ReservaDetalheView';
 import PerfilView from '../pages/PerfilView';
 import ReservaDetalheView from '../pages/ReservaDetalheView';
+import MeuPerfilView from '../pages/MeuPerfilView';
+import { useAuth } from '../../../shared/contexts/AuthContext';
 
 function ProtectedLayout() {
   return (
@@ -32,7 +33,8 @@ export function ClienteRoutes() {
         <Route index element={<Navigate to="perfil" replace />} />
         <Route path="dashboard" element={<DashboardClienteView />} />
         <Route path="reservas/:reservaId" element={<ReservaDetalheView />} />
-        <Route path="perfil" element={<PerfilView />} />
+        <Route path="meu-perfil" element={<MeuPerfilView />} />
+        <Route path="initial-page" element={<PerfilView />} />
         <Route path="*" element={<Navigate to="/cliente/perfil" replace />} />
       </Route>
     </Routes>
