@@ -6,7 +6,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 function PerfilView() {
   const navigate = useNavigate();
-  const { user, reservas, loading, error, cancelarReserva, recarregar } = usePerfilViewModel();
+  const { user, reservas, loading, error, saldoMilhas, cancelarReserva, recarregar } = usePerfilViewModel();
 
   const handleVerDetalhes = (reservaId: string) => {
     navigate(`/cliente/reservas/${reservaId}`);
@@ -16,7 +16,6 @@ function PerfilView() {
   if (error) return <div>Erro: {error}</div>;
   if (!user) return <div>Usuário não encontrado</div>;
 
-  const saldoMilhas = 12900;
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
@@ -30,7 +29,8 @@ function PerfilView() {
           { title: "Consultar reserva por código", desc: "Digite o código para ver os detalhes da reserva.", icon: "🔍" },
           { title: "Fazer check-in", desc: "Realize o check-in para os próximos voos.", icon: "✅" },
         ].map((service, index) => (
-          <Card key={index} sx={{ mb: 2, display: "flex", alignItems: "start" }}>
+          <Card key={index} sx={{ mb: 2, display: "flex", alignItems: "start" }}
+            onClick={() => service.title === "Reservar voos" ? navigate('/cliente/reservar') : null}>
             <CardContent sx={{ p: 1 }}>
               <Typography variant="body2" sx={{ fontWeight: "bold" }}>
                 {service.icon} {service.title}
@@ -56,7 +56,7 @@ function PerfilView() {
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="h6">Voos e Reservas</Typography>
           <Button onClick={recarregar} variant="contained" color="primary" size="small" sx={{ width: 20, textTransform: "none" }} disabled={loading}>
-            <RefreshIcon fontSize="small"/>
+            <RefreshIcon fontSize="small" />
           </Button>
         </Box>
 
