@@ -1,21 +1,34 @@
 // modules/auth/services/authService.ts
-import { AuthResponse, LoginFormData, User } from '../models/AuthTypes';
+// modules/auth/services/authService.ts
+import { Cliente } from '../../cliente/models/ClienteTypes';
+import { Funcionario } from '../../funcionario/models/FuncionarioTypes';
+import { AuthResponse, AuthUser, LoginFormData } from '../models/AuthTypes';
 
-// Mock de banco de dados em memória
-const mockDatabase: { [email: string]: User & { password: string } } = {
+// Defina um tipo para o mock database
+type MockUser = (Cliente | Funcionario) & { password: string };
+
+const mockDatabase: Record<string, MockUser> = {
   "cliente@example.com": {
     id: "user-123",
     nome: "João Silva",
     email: "cliente@example.com",
     role: "client",
-    password: "senha123"
+    password: "senha123",
+    cpf: "123.456.789-00",
+    cep: "80000-000",
+    endereco: "Rua Exemplo, 123",
+    cidade: "Curitiba",
+    estado: "PR",
+    saldoMilhas: 11000
   },
   "funcionario@empresa.com": {
     id: "user-456",
     nome: "Maria Souza",
     email: "funcionario@empresa.com",
     role: "employee",
-    password: "senha456"
+    password: "senha456",
+    cpf: "123.456.789-00",
+    telefone: "11111111"
   }
 };
 
@@ -23,7 +36,6 @@ export const authService = {
   async login(formData: LoginFormData): Promise<AuthResponse> {
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Validação
     if (!formData.email || !formData.password) {
       throw new Error('Email e senha são obrigatórios');
     }
@@ -34,25 +46,22 @@ export const authService = {
       throw new Error('Credenciais inválidas');
     }
 
-    // Gera token mockado consistente
     const token = `mock-token-${user.id}`;
-    localStorage.setItem('token', token); // Persiste o token
+    localStorage.setItem('token', token);
+
+    // Remove a senha antes de retornar
+    const { password, ...userWithoutPassword } = user;
 
     return {
       token,
-      user: {
-        id: user.id,
-        nome: user.nome,
-        email: user.email,
-        role: user.role
-      }
+      user: userWithoutPassword
     };
   },
 
-  async getCurrentUser(): Promise<User> {
+  async getCurrentUser(): Promise<AuthUser> {
     const token = localStorage.getItem('token');
     console.log(token)
-    
+
     if (!token) {
       throw new Error('Não autenticado');
     }

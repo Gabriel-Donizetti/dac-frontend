@@ -1,31 +1,28 @@
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { authService } from '../../modules/auth/services/authService';
+import { AuthUser } from '../../modules/auth/models/AuthTypes';
 
-interface User {
-  id: string;
-  email: string;
-  nome: string; // Adicionado
-  role: 'client' | 'employee';
-}
+
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   isAuthenticated: boolean;
   isLoading: boolean; // Adicione isso;
-  login: (userData: User, token: string) => void;
+  login: (user: AuthUser, token: string) => void;
   logout: () => void;
+  updateUser: (updatedUser: Partial<AuthUser>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        
+
         const userData = await authService.getCurrentUser();
         setUser(userData);
       } catch {
@@ -38,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     initializeAuth();
   }, []);
 
-  const login = (userData: User, token: string) => {
+  const login = (userData: AuthUser, token: string) => {
     setUser(userData);
     localStorage.setItem('token', token);
   };
@@ -48,13 +45,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
   };
 
+  const updateUser = (updatedFields: Partial<AuthUser>) => {
+    if (!user) {
+      throw new Error('No user is currently logged in to update.');
+    }
+    setUser({ ...user, ...updatedFields });
+  };
   return (
     <AuthContext.Provider value={{
       user,
       isAuthenticated: !!user,
       isLoading, // Adicione isso
       login,
-      logout
+      logout,
+      updateUser,
     }}>
       {children}
     </AuthContext.Provider>

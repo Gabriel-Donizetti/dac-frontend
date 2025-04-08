@@ -1,6 +1,10 @@
-export interface Cliente {
-    id: string;
-    nome: string;
-    email: string;
-    saldoMilhas: number;
-  }
+import { User } from "../../auth/models/AuthTypes";
+
+export interface Cliente extends User {
+  cpf: string;
+  cep: string;
+  endereco: string;
+  cidade: string;
+  estado: string;
+  saldoMilhas: number;
+}

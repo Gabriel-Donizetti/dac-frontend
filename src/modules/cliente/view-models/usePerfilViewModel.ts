@@ -4,12 +4,17 @@ import { authService } from '../../auth/services/authService';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { reservaService } from '../services/reservaService';
 import { Reserva } from '../models/ReservaTypes';
+import { Cliente } from '../models/ClienteTypes';
 
 export function usePerfilViewModel() {
   const { user } = useAuth();
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+
+  const cliente = user?.role === 'client' ? user as Cliente : null;
+  const saldoMilhas = cliente?.saldoMilhas || 0;
 
   const carregarDados = async () => {
     if (!user?.id) return;
@@ -47,6 +52,7 @@ export function usePerfilViewModel() {
     reservas,
     loading,
     error,
+    saldoMilhas,
     cancelarReserva,
     recarregar: carregarDados
   };

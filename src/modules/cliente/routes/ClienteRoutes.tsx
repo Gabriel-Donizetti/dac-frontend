@@ -1,12 +1,12 @@
 // modules/cliente/routes/ClienteRoutes.tsx
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { ClienteHeader } from '../components/ClienteHeader';
-import DashboardClienteView from '../pages/ReservaDetalheView';
 import PerfilView from '../pages/PerfilView';
 import ReservaDetalheView from '../pages/ReservaDetalheView';
 import MeuPerfilView from '../pages/MeuPerfilView';
 import { useAuth } from '../../../shared/contexts/AuthContext';
-
+import { BuscaVoosView } from '../pages/BuscaVoosView';
+import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
 function ProtectedLayout() {
   return (
     <>
@@ -31,11 +31,14 @@ export function ClienteRoutes() {
     <Routes>
       <Route element={<ProtectedLayout />}>
         <Route index element={<Navigate to="perfil" replace />} />
-        <Route path="dashboard" element={<DashboardClienteView />} />
         <Route path="reservas/:reservaId" element={<ReservaDetalheView />} />
         <Route path="meu-perfil" element={<MeuPerfilView />} />
+        <Route path="reservar">
+          <Route index element={<BuscaVoosView />} />
+          <Route path="confirmar/:vooId" element={<ConfirmarReservaView />} />
+        </Route>
         <Route path="initial-page" element={<PerfilView />} />
-        <Route path="*" element={<Navigate to="/cliente/perfil" replace />} />
+        <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />
       </Route>
     </Routes>
   );
