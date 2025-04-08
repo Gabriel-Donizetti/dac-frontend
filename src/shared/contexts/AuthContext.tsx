@@ -10,6 +10,7 @@ interface AuthContextType {
   isLoading: boolean; // Adicione isso;
   login: (user: AuthUser, token: string) => void;
   logout: () => void;
+  updateUser: (updatedUser: Partial<AuthUser>) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        
+
         const userData = await authService.getCurrentUser();
         setUser(userData);
       } catch {
@@ -44,13 +45,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem('token');
   };
 
+  const updateUser = (updatedFields: Partial<AuthUser>) => {
+    if (!user) {
+      throw new Error('No user is currently logged in to update.');
+    }
+    setUser({ ...user, ...updatedFields });
+  };
   return (
     <AuthContext.Provider value={{
       user,
       isAuthenticated: !!user,
       isLoading, // Adicione isso
       login,
-      logout
+      logout,
+      updateUser,
     }}>
       {children}
     </AuthContext.Provider>
