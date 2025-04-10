@@ -7,6 +7,7 @@ import MeuPerfilView from '../pages/MeuPerfilView';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { BuscaVoosView } from '../pages/BuscaVoosView';
 import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
+import ConsultarExtratoView from '../pages/ConsultarExtratoView';
 function ProtectedLayout() {
   return (
     <>
@@ -38,6 +39,7 @@ export function ClienteRoutes() {
           <Route path="confirmar/:vooId" element={<ConfirmarReservaView />} />
         </Route>
         <Route path="initial-page" element={<PerfilView />} />
+        <Route path="consulta-extrato" element={<ConsultarExtratoView />} />
         <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />
       </Route>
     </Routes>
