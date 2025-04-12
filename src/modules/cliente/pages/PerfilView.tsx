@@ -7,6 +7,14 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 function PerfilView() {
   const navigate = useNavigate();
   const { user, reservas, loading, error, saldoMilhas, cancelarReserva, recarregar } = usePerfilViewModel();
+const handleServiceClick = (serviceTitle: string) => {
+  if (serviceTitle === "Reservar voos") {
+    navigate("/cliente/reservar");
+  } else if (serviceTitle === "Comprar milhas") {
+    navigate("/cliente/comprarMilhas");
+  }
+};
+
 
   const handleVerDetalhes = (reservaId: string) => {
     navigate(`/cliente/reservas/${reservaId}`);
@@ -23,24 +31,27 @@ function PerfilView() {
         <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
           Serviços
         </Typography>
-        {[
-          { title: "Comprar milhas", desc: "Compre milhas para usar em suas reservas de voos.", icon: "💳" },
-          { title: "Reservar voos", desc: "Pesquise e reserve voos com milhas ou dinheiro.", icon: "✈️" },
-          { title: "Consultar reserva por código", desc: "Digite o código para ver os detalhes da reserva.", icon: "🔍" },
-          { title: "Fazer check-in", desc: "Realize o check-in para os próximos voos.", icon: "✅" },
-        ].map((service, index) => (
-          <Card key={index} sx={{ mb: 2, display: "flex", alignItems: "start" }}
-            onClick={() => service.title === "Reservar voos" ? navigate('/cliente/reservar') : null}>
-            <CardContent sx={{ p: 1 }}>
-              <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-                {service.icon} {service.title}
-              </Typography>
-              <Typography variant="caption">
-                {service.desc}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+                    {[
+              { title: "Comprar milhas", desc: "Compre milhas para usar em suas reservas de voos.", icon: "💳" },
+              { title: "Reservar voos", desc: "Pesquise e reserve voos com milhas ou dinheiro.", icon: "✈️" },
+              { title: "Consultar reserva por código", desc: "Digite o código para ver os detalhes da reserva.", icon: "🔍" },
+              { title: "Fazer check-in", desc: "Realize o check-in para os próximos voos.", icon: "✅" },
+            ].map((service, index) => (
+              <Card
+                key={index}
+                sx={{ mb: 2, display: "flex", alignItems: "start" }}
+                onClick={() => handleServiceClick(service.title)}  
+              >
+                <CardContent sx={{ p: 1 }}>
+                  <Typography variant="body2" sx={{ fontWeight: "bold" }}>
+                    {service.icon} {service.title}
+                  </Typography>
+                  <Typography variant="caption">
+                    {service.desc}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw", paddingLeft: 4, paddingRight: 8 }}>

@@ -8,6 +8,8 @@ import { useAuth } from '../../../shared/contexts/AuthContext';
 import { BuscaVoosView } from '../pages/BuscaVoosView';
 import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
 import ConsultarExtratoView from '../pages/ConsultarExtratoView';
+import  ComprarMilhasView from '../pages/ClienteMilhas';
+
 function ProtectedLayout() {
   return (
     <>
@@ -40,6 +42,7 @@ export function ClienteRoutes() {
         </Route>
         <Route path="initial-page" element={<PerfilView />} />
         <Route path="consulta-extrato" element={<ConsultarExtratoView />} />
+        <Route path="comprarMilhas" element={<ComprarMilhasView />} />
         <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />
       </Route>
     </Routes>
