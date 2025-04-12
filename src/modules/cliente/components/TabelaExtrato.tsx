@@ -1,4 +1,3 @@
-import React from "react";
 import {
     Container,
     Typography,
@@ -33,8 +32,8 @@ const dadosExtrato = [
 
 export default function TabelaExtrato() {
     return (
-        <Container maxWidth="md">
-            <Box my={4}>
+        <Container >
+            <Box >
                 <Typography variant="h4" gutterBottom>
                     Extrato de milhas
                 </Typography>

@@ -1,7 +1,5 @@
 import { Box, TextField, Button, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme, Alert, CircularProgress } from '@mui/material';
 import { useReservaViewModel } from '../view-models/useReservaViewModel';
-import { useNavigate } from 'react-router-dom';
-import { ArrowBack } from '@mui/icons-material';
 
 export function BuscaVoosView() {
     const theme = useTheme();
@@ -17,20 +15,10 @@ export function BuscaVoosView() {
         error
     } = useReservaViewModel();
 
-    const navigate = useNavigate();
-
     return (
         <Box sx={{ p: 4 }}>
-            <Button
-                startIcon={<ArrowBack />}
-                onClick={() => navigate('/cliente/perfil')}
-                sx={{ mb: 2 }}
-            >
-                Voltar
-            </Button>
-
-            <Paper elevation={3} sx={{ p: 3, mb: 3, borderRadius: theme.shape.borderRadius }}>
-                <Typography variant="h5" gutterBottom sx={{ color: theme.palette.primary.main }}>
+            <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+                <Typography variant="h5" >
                     Buscar Voos
                 </Typography>
 
@@ -75,7 +63,7 @@ export function BuscaVoosView() {
                     <CircularProgress />
                 </Box>
             ) : voos.length > 0 ? (
-                <Paper elevation={3} sx={{ borderRadius: theme.shape.borderRadius }}>
+                <Paper elevation={3} >
                     <TableContainer>
                         <Table>
                             <TableHead>
@@ -117,7 +105,7 @@ export function BuscaVoosView() {
                     </TableContainer>
                 </Paper>
             ) : (
-                <Paper elevation={3} sx={{ p: 3, textAlign: 'center', borderRadius: theme.shape.borderRadius }}>
+                <Paper elevation={3} sx={{ p: 3, textAlign: 'center' }}>
                     <Typography>Nenhum voo encontrado. Faça uma busca para ver os voos disponíveis.</Typography>
                 </Paper>
             )}

@@ -1,4 +1,4 @@
-import { Container, Paper, TextField, Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import TabelaExtrato from "../components/TabelaExtrato";
 
 const ConsultarExtratoView = () => {
