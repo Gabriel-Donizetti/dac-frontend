@@ -1,24 +1,17 @@
-export interface FiltrosReserva {
-    origem?: string;
-    destino?: string;
-    dataIda?: string;
-    dataVolta?: string;
-    passageiros?: number;
-  }
-  
-  export interface Voo {
-    id: string;
-    origem: string;
-    destino: string;
-    dataPartida: string;
-    dataChegada: string;
-    preco: number;
-    assentosDisponiveis: number;
-  }
-  
-  export interface Reserva {
-    id: string;
-    voo: Voo;
-    dataReserva: string;
-    status: 'confirmada' | 'pendente' | 'cancelada';
-  }
+export type EstadoReserva = 'reservada' | 'concluída' | 'cancelada';
+
+export interface Reserva {
+  id: string;
+  codigo: string;
+  dataHora: string; // ISO string
+  origem: string;
+  destino: string;
+  valorReais: number;
+  milhasGastas: number;
+  estado: EstadoReserva;
+}
+
+export interface FiltroReservas {
+  estados?: EstadoReserva[];
+  ordenarPor?: 'dataHora' | 'valor';
+}

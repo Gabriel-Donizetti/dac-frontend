@@ -1,29 +1,42 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { HomeView } from './modules/home'
-import { ClienteRoutes, AuthProvider } from './modules/cliente'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './shared/contexts/AuthContext';
+import { PrivateRoute } from './shared/components/PrivateRoute';
+import { HomeView } from './modules/home';
+import { LoginView } from './modules/auth/pages/LoginView';
+import { ClienteRoutes } from './modules/cliente';
+import { ThemeProvider } from '@mui/material/styles';
+import { Theme } from './Theme';
 
-// Criação do router principal
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeView />
   },
   {
-    path: "/cliente/*", // Note o /* para permitir sub-rotas
-    element: (
-      <AuthProvider> {/* Envolve as rotas do cliente com o provedor de autenticação */}
-        <ClienteRoutes />
-      </AuthProvider>
-    )
+    path: '/login',
+    element: <LoginView />
+  },
+  {
+    path: '/cliente',
+    element: <PrivateRoute allowedRoles={['client']} />, // Sem children
+    children: [
+      {
+        path: '*', // Captura todas as sub-rotas
+        element: <ClienteRoutes />
+      }
+    ]
   }
-])
+]);
 
-// Renderização da aplicação
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <ThemeProvider theme={Theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </AuthProvider>
   </StrictMode>
-)
+);
