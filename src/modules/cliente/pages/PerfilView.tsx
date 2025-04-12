@@ -27,7 +27,7 @@ const handleServiceClick = (serviceTitle: string) => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
-      <Box sx={{ width: 450, paddingLeft: 1, color: "white", display: "flex", flexDirection: "column", justifyContent: "start" }}>
+      <Box sx={{ width: 450, paddingLeft: 1, display: "flex", flexDirection: "column", justifyContent: "start" }}>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
           Serviços
         </Typography>
