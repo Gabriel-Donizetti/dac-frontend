@@ -34,8 +34,7 @@ export default function Layout() {
   const menuClientItens = [
     { text: "Perfil", icon: <AccountCircleIcon />, path: "initial-page" },
     { text: "Reservar Voo", icon: <FlightIcon />, path: "reservar" },
-    { text: "Consultar Extrato", icon: <HistoryIcon />, path: "consulta-extrato" },
-    { text: "Comprar Milhas", icon: <AttachMoneyIcon />, path: "comprarMilhas" },
+    { text: "Milhas", icon: <AttachMoneyIcon />, path: "milhas" },
   ];
 
 

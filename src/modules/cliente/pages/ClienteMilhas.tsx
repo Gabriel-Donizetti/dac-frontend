@@ -13,10 +13,11 @@ import {
   TableRow,
   Paper,
   Stack,
+  Chip,
 } from "@mui/material";
 import { useMilhas } from "../view-models/useClienteMilhasViewModel";
 
-const ComprarMilhasView: React.FC = () => {
+const MilhasView: React.FC = () => {
   const { transactions, buyMiles } = useMilhas();
   const [valor, setValor] = useState<string>("");
   const [purchaseMessage, setPurchaseMessage] = useState<string>("");
@@ -34,7 +35,7 @@ const ComprarMilhasView: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
+    <Container>
       <Typography variant="h4" gutterBottom>
         Comprar Milhas
       </Typography>
@@ -64,16 +65,16 @@ const ComprarMilhasView: React.FC = () => {
       <Typography variant="h5" sx={{ mt: 4 }}>
         Extrato de Milhas
       </Typography>
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell>Data/Hora</TableCell>
-              <TableCell>Código da Reserva</TableCell>
-              <TableCell>Valor (R$)</TableCell>
-              <TableCell>Milhas</TableCell>
-              <TableCell>Descrição</TableCell>
-              <TableCell>Tipo</TableCell>
+            <TableRow sx={{ backgroundColor: "primary.main" }}>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Data/Hora</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Código</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Valor (R$)</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Milhas</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Descrição</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Tipo</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -84,7 +85,13 @@ const ComprarMilhasView: React.FC = () => {
                 <TableCell>{trans.valor.toFixed(2)}</TableCell>
                 <TableCell>{trans.milhas.toFixed(2)}</TableCell>
                 <TableCell>{trans.descricao}</TableCell>
-                <TableCell>{trans.tipo}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={trans.tipo}
+                    color={trans.tipo === "ENTRADA" ? "success" : "error"}
+                    size="small"
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -95,4 +102,4 @@ const ComprarMilhasView: React.FC = () => {
   );
 };
 
-export default ComprarMilhasView;
+export default MilhasView;

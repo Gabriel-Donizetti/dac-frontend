@@ -1,13 +1,12 @@
 // modules/cliente/routes/ClienteRoutes.tsx
 import { Routes, Route, Navigate } from 'react-router-dom';
-import PerfilView from '../pages/PerfilView';
+import PerfilView from '../pages/InitialPageView';
 import ReservaDetalheView from '../pages/ReservaDetalheView';
 import MeuPerfilView from '../pages/MeuPerfilView';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { BuscaVoosView } from '../pages/BuscaVoosView';
 import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
-import ConsultarExtratoView from '../pages/ConsultarExtratoView';
-import ComprarMilhasView from '../pages/ClienteMilhas';
+import MilhasView from '../pages/ClienteMilhas';
 import ClienteLayout from '../../../shared/components/Layout';
 
 export function ClienteRoutes() {
@@ -28,8 +27,7 @@ export function ClienteRoutes() {
         <Route path="meu-perfil" element={<MeuPerfilView />} />
         <Route path="reservar" element={<BuscaVoosView />} />
         <Route path="reservar/confirmar/:vooId" element={<ConfirmarReservaView />} />
-        <Route path="consulta-extrato" element={<ConsultarExtratoView />} />
-        <Route path="comprarMilhas" element={<ComprarMilhasView />} />
+        <Route path="milhas" element={<MilhasView />} />
         <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />
       </Route>
     </Routes>
