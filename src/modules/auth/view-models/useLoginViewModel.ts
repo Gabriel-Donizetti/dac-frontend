@@ -18,7 +18,7 @@ export function useLoginViewModel() {
     try {
       const { token, user } = await authService.login(formData);
       await authLogin(user, token); // Espera a atualização do contexto
-      navigate(user.role === 'client' ? '/cliente/initial-page' : '/funcionario/painel');
+      navigate(user.role === 'client' ? '/cliente/initial-page' : '/funcionario/initial-page');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro no login');
     } finally {
