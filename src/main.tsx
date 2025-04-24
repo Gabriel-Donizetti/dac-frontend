@@ -9,6 +9,7 @@ import { LoginView } from './modules/auth/pages/LoginView';
 import { ClienteRoutes } from './modules/cliente';
 import { ThemeProvider } from '@mui/material/styles';
 import { Theme } from './Theme';
+import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,18 @@ const router = createBrowserRouter([
         element: <ClienteRoutes />
       }
     ]
-  }
+  },
+  {
+    path: '/funcionario',
+    element: <PrivateRoute allowedRoles={['employee']} />,
+    children: [
+      {
+      path: '*', // Captura todas as sub-rotas
+          element: <FuncionarioRoutes />
+      }
+    ]
+
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(
