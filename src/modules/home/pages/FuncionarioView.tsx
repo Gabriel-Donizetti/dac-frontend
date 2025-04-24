@@ -13,6 +13,7 @@ import {
   Paper,
 } from '@mui/material';
 import { FuncionarioViewModel } from '../../funcionario/models/FuncionarioViewModel';
+import { FuncionarioHeader } from '../../funcionario/components/FuncionarioHeader';
 
 const FuncionarioView: React.FC = () => {
   const {
@@ -23,6 +24,8 @@ const FuncionarioView: React.FC = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+    <FuncionarioHeader />
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" sx={{ mb: 2 }}>
         Painel do Funcionário
@@ -35,7 +38,7 @@ const FuncionarioView: React.FC = () => {
         <Button variant="contained" color="secondary" >
           Listagem de Funcionários
         </Button>
-        <Button variant="contained" color="success" >
+        <Button variant="contained" color="success" onClick={() => navigate('/funcionario/crud')}>
           Inserir/Alterar um Funcionário
         </Button>
 
@@ -97,7 +100,9 @@ const FuncionarioView: React.FC = () => {
         </TableContainer>
       )}
     </Box>
+    </>
   );
+  
 };
 
 export default FuncionarioView;

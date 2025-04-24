@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import FuncionarioView from '../../home/pages/FuncionarioView';
+import FuncionarioCRUDView from '../../home/pages/FuncionarioCRUDView';
 
 
 function ProtectedLayout() {
@@ -26,6 +27,7 @@ export function FuncionarioRoutes() {
       <Route element={<ProtectedLayout />}>
         <Route index element={<Navigate to="initial-page" replace />} />
         <Route path="initial-page" element={<FuncionarioView />} />
+        <Route path="crud" element={<FuncionarioCRUDView />} />
         <Route path="*" element={<Navigate to="/funcionario/initial-page" replace />} />
       </Route>
     </Routes>
