@@ -91,7 +91,7 @@ export function useReservaViewModel() {
             console.log(dadosReserva)
 
             const reserva = await vooService.mockFinalizarReserva(dadosReserva);
-
+            
             // Navega para a página de confirmação
             // navigate(`/cliente/reservas/${reserva.codigo}`);
             navigate(`/cliente/initial-page`)

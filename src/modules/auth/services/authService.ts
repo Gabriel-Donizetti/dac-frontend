@@ -1,40 +1,10 @@
 // modules/auth/services/authService.ts
-// modules/auth/services/authService.ts
-import { Cliente } from '../../cliente/models/ClienteTypes';
-import { Funcionario } from '../../funcionario/models/FuncionarioTypes';
 import { AuthResponse, AuthUser, LoginFormData } from '../models/AuthTypes';
+import { mockDatabase } from '../mocks/mockDatabase';
 
-// Defina um tipo para o mock database
-type MockUser = (Cliente | Funcionario) & { password: string };
-
-const mockDatabase: Record<string, MockUser> = {
-  "cliente@example.com": {
-    id: "user-123",
-    nome: "João Silva",
-    email: "cliente@example.com",
-    role: "client",
-    password: "senha123",
-    cpf: "123.456.789-00",
-    cep: "80000-000",
-    endereco: "Rua Exemplo, 123",
-    cidade: "Curitiba",
-    estado: "PR",
-    saldoMilhas: 11000
-  },
-  "funcionario@empresa.com": {
-    id: "user-456",
-    nome: "Maria Souza",
-    email: "funcionario@empresa.com",
-    role: "employee",
-    password: "senha456",
-    cpf: "123.456.789-00",
-    telefone: "11111111"
-  }
-};
 
 export const authService = {
   async login(formData: LoginFormData): Promise<AuthResponse> {
-    await new Promise(resolve => setTimeout(resolve, 500));
 
     if (!formData.email || !formData.password) {
       throw new Error('Email e senha são obrigatórios');
@@ -49,7 +19,6 @@ export const authService = {
     const token = `mock-token-${user.id}`;
     localStorage.setItem('token', token);
 
-    // Remove a senha antes de retornar
     const { password, ...userWithoutPassword } = user;
 
     return {
@@ -66,7 +35,6 @@ export const authService = {
       throw new Error('Não autenticado');
     }
 
-    // Extrai ID do token mockado
     const userId = token.replace('mock-token-', '');
     const user = Object.values(mockDatabase).find(u => u.id === userId);
 
@@ -83,6 +51,14 @@ export const authService = {
     };
   },
 
+  async generatePassword(): Promise<string>{
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  },
+
+  async sendEmailPassword(password: string){
+    // const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    // const data = await response.json();
+  },
   async logout(): Promise<void> {
     localStorage.removeItem('token');
   }
