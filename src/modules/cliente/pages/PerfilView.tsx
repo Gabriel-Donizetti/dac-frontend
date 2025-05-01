@@ -9,7 +9,7 @@ function PerfilView() {
   const { user, reservas, loading, error, saldoMilhas, cancelarReserva, recarregar } = usePerfilViewModel();
 const handleServiceClick = (serviceTitle: string) => {
   if (serviceTitle === "Reservar voos") {
-    navigate("/cliente/reservar");
+    navigate("/cliente/reservar"); // BuscaVoosView
   } else if (serviceTitle === "Comprar milhas") {
     navigate("/cliente/comprarMilhas");
   }

@@ -10,10 +10,21 @@ import { Cliente } from "../models/ClienteTypes";
 // };
 
 export const clienteService = {
+
+
   async getSaldoMilhas(clienteId: string): Promise<number> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return 2000; 
+    console.log(clienteId)
+    return 3000; 
   },
+
+  async restituirMilhas(){
+
+  },
+
+  async debitarMilhas(){
+
+  },
+
   async cadastrar(cliente: Cliente & { password: string }) {
     
     const novoCliente: MockUser = {
