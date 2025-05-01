@@ -10,7 +10,7 @@ export interface User {
   id: string;
   nome: string;
   email: string;
-  role: 'client' | 'employee';
+  role: "client" | "employee";
 }
 
 export type AuthUser = User | Cliente | Funcionario;
@@ -18,4 +18,16 @@ export type AuthUser = User | Cliente | Funcionario;
 export interface AuthResponse {
   token: string;
   user: AuthUser;
+}
+
+export interface RegisterFormData {
+  cpf: string;
+  nome: string;
+  email: string;
+  cep: string;
+}
+
+export interface RegisterResponse {
+  user: Cliente;
+  temporaryPassword: string;
 }
