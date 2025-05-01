@@ -32,6 +32,7 @@ export const clienteService = {
 
     // Adiciona ao mockDatabase
     mockDatabase[cliente.email] = novoCliente;
+    //VERIFICAR STATUS SE FOI CADASTRADO COM SUCESSO E RETORNAR DE MANEIRA CORRETA
     console.log('Cliente cadastrado:', novoCliente);
     console.log('Database atual:', mockDatabase);
     

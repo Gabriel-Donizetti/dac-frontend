@@ -41,10 +41,11 @@ export function useRegisterViewModel() {
       };
       
       await clienteService.cadastrar(cliente);
-
+//COLOCAR VERIFICAÇÃO DE SUCESSO DEPOIS DA VALIDAÇÃO DO BACKEND
       setSuccess(true);
       setSuccessMessage(`Cadastro realizado com sucesso! Sua senha é: ${senha} (também foi enviada para seu email). Redirecionando para login...`);
       
+      //COLOCAR IF DEPOIS DO SUCESSO PARA NAVEGAÇÃO CORRETA
       setTimeout(() => {
         navigate('/login');
       }, 3000);
