@@ -15,10 +15,10 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from "@mui/icons-material/Menu";
 import FlightIcon from "@mui/icons-material/Flight";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import HistoryIcon from "@mui/icons-material/History";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 const drawerWidth = 240;
@@ -32,11 +32,11 @@ export default function Layout() {
   };
 
   const menuClientItens = [
-    { text: "Perfil", icon: <AccountCircleIcon />, path: "initial-page" },
+    { text: "Página inicial", icon: <HomeIcon />, path: "initial-page" },
+    { text: "Perfil", icon: <AccountCircleIcon />, path: "meu-perfil" },
     { text: "Reservar Voo", icon: <FlightIcon />, path: "reservar" },
     { text: "Milhas", icon: <AttachMoneyIcon />, path: "milhas" },
   ];
-
 
   const drawer = (
     <div>
