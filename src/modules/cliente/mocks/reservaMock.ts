@@ -19,6 +19,17 @@ export const reservasMock: Reserva[] = [
       destino: 'REC (Recife)',
       valorReais: 420.00,
       milhasGastas: 7000,
-      estado: 'CONFIRMADA'
+      estado: 'REALIZADA'
+    },
+    {
+      id: '3',
+      codigo: 'RES-2025-005',
+      dataHora: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(), // 1 hora a partir de agora
+      origem: 'GRU (São Paulo)',
+      destino: 'POA (Porto Alegre)',
+      valorReais: 350.00,
+      milhasGastas: 6000,
+      estado: 'CRIADA'
     }
+    
   ];

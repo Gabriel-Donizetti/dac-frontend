@@ -1,4 +1,4 @@
-import { Reserva, FiltroReservas } from '../models/ReservaTypes';
+import { Reserva, FiltroReservas, EstadoReserva } from '../models/ReservaTypes';
 import { reservasMock } from '../mocks/reservaMock';
 
 
@@ -29,5 +29,11 @@ export const reservaService = {
     await new Promise(resolve => setTimeout(resolve, 500));
     const reserva = reservasMock.find(r => r.id === reservaId);
     if (reserva) reserva.estado = 'CANCELADA';
+  },
+
+  async atualizarEstadoReserva(id: string, novoEstado: EstadoReserva): Promise<void> {
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const reserva = reservasMock.find(r => r.id === id);
+    if (reserva) reserva.estado = novoEstado;
   }
 };

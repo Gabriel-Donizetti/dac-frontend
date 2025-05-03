@@ -9,6 +9,7 @@ import { BuscaVoosView } from '../pages/BuscaVoosView';
 import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
 import ConsultarExtratoView from '../pages/ConsultarExtratoView';
 import  ComprarMilhasView from '../pages/ClienteMilhas';
+import CheckinView from '../pages/CheckinView';
 
 function ProtectedLayout() {
   return (
@@ -43,6 +44,7 @@ export function ClienteRoutes() {
         <Route path="initial-page" element={<PerfilView />} />
         <Route path="consulta-extrato" element={<ConsultarExtratoView />} />
         <Route path="comprarMilhas" element={<ComprarMilhasView />} />
+        <Route path="checkin" element={<CheckinView />} />
         <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />
       </Route>
     </Routes>
