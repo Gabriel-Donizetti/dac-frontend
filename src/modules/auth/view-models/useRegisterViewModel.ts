@@ -24,10 +24,10 @@ export function useRegisterViewModel() {
       const senha = await authService.generatePassword();
 
       authService.sendEmailPassword(senha)
-      
+
       console.log(`Senha enviada para ${formData.email}: ${senha}`);
       const cliente: Cliente & { password: string } = {
-        id: '', 
+        id: '',
         role: 'client',
         password: senha,
         cpf: formData.cpf,
@@ -39,12 +39,13 @@ export function useRegisterViewModel() {
         email: formData.email,
         saldoMilhas: 0
       };
-      
-      await clienteService.cadastrar(cliente);
 
+      await clienteService.cadastrar(cliente);
+      //COLOCAR VERIFICAÇÃO DE SUCESSO DEPOIS DA VALIDAÇÃO DO BACKEND
       setSuccess(true);
       setSuccessMessage(`Cadastro realizado com sucesso! Sua senha é: ${senha} (também foi enviada para seu email). Redirecionando para login...`);
-      
+
+      //COLOCAR IF DEPOIS DO SUCESSO PARA NAVEGAÇÃO CORRETA
       setTimeout(() => {
         navigate('/login');
       }, 3000);

@@ -16,7 +16,7 @@ export interface Reserva {
     quantidade: number;
     milhasUsadas: number;
     valorPago: number;
-    estado: 'CRIADA' | 'CONFIRMADA' | 'CANCELADA';
+    estado: 'REALIZADO' | 'CONFIRMADO' | 'CANCELADO';
 }
 
 export interface DadosReserva {

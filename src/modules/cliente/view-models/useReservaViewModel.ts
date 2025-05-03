@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { vooService } from '../services/vooService';
-import { Voo, DadosReserva, Reserva } from '../models/VooTypes';
+import { Voo } from '../models/VooTypes';
+import { Reserva } from '../models/ReservaTypes';
 import { Cliente } from '../../cliente/models/ClienteTypes';
 
 export function useReservaViewModel() {
     const navigate = useNavigate();
     const { vooId } = useParams();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
 
     // Estados
     const [origem, setOrigem] = useState('');
@@ -80,18 +81,40 @@ export function useReservaViewModel() {
     const finalizarReserva = async () => {
         if (!vooSelecionado || !user) return;
 
+        //levar essa parte pro back?
+        const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numeros = '0123456789';
+        let codigo = '';
+
+        for (let i = 0; i < 3; i++) {
+            codigo += letras.charAt(Math.floor(Math.random() * letras.length));
+        }
+        for (let i = 0; i < 3; i++) {
+            codigo += numeros.charAt(Math.floor(Math.random() * numeros.length));
+        }
         setLoading(true);
         try {
-            const dadosReserva: DadosReserva = {
-                vooId: vooSelecionado.id,
-                clienteId: user.id,
-                quantidade,
-                milhasUsadas
+            const dadosReserva: Reserva = {
+                id: Math.floor(1000 + Math.random() * 9000).toString(),
+                codigo: codigo,
+                dataHora: vooSelecionado.dataHora,
+                origem: vooSelecionado.origem,
+                destino: vooSelecionado.destino,
+                valorReais: valorComMilhas,
+                milhasGastas: milhasUsadas,
+                estado: 'CRIADA'
             };
             console.log(dadosReserva)
 
             const reserva = await vooService.mockFinalizarReserva(dadosReserva);
             
+            // await clienteService.debitarMilhas(user.id, milhasUsadas, 'Reserva de voo');
+
+            // Atualiza o estado local
+            updateUser({
+              ...user,
+              saldoMilhas: cliente?.saldoMilhas ?? - milhasUsadas
+            });
             // Navega para a página de confirmação
             // navigate(`/cliente/reservas/${reserva.codigo}`);
             navigate(`/cliente/initial-page`)

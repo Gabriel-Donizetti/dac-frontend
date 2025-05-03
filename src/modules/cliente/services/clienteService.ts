@@ -10,10 +10,21 @@ import { Cliente } from "../models/ClienteTypes";
 // };
 
 export const clienteService = {
+
+
   async getSaldoMilhas(clienteId: string): Promise<number> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return 2000; 
+    console.log(clienteId)
+    return 3000; 
   },
+
+  async restituirMilhas(){
+
+  },
+
+  async debitarMilhas(){
+
+  },
+
   async cadastrar(cliente: Cliente & { password: string }) {
     
     const novoCliente: MockUser = {
@@ -32,6 +43,7 @@ export const clienteService = {
 
     // Adiciona ao mockDatabase
     mockDatabase[cliente.email] = novoCliente;
+    //VERIFICAR STATUS SE FOI CADASTRADO COM SUCESSO E RETORNAR DE MANEIRA CORRETA
     console.log('Cliente cadastrado:', novoCliente);
     console.log('Database atual:', mockDatabase);
     

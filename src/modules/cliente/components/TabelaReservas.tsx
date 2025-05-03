@@ -55,7 +55,7 @@ export function TabelaReservas({
                     <Button variant="outlined" size="small" sx={{ backgroundColor:"primary.main" }} onClick={() => onVerDetalhes(reserva.id)}>
                       Ver
                     </Button>
-                    {reserva.estado === "reservada" && (
+                    {reserva.estado === "CRIADA" /*|| reserva.estado === "CHECK-IN"*/ && (
                       <Button variant="contained" size="small" color="error" onClick={() => onCancelar(reserva.id)}>
                         Cancelar
                       </Button>

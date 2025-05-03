@@ -1,6 +1,5 @@
 // modules/cliente/view-models/usePerfilViewModel.ts
 import { useState, useEffect } from 'react';
-import { authService } from '../../auth/services/authService';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { reservaService } from '../services/reservaService';
 import { Reserva } from '../models/ReservaTypes';
@@ -11,18 +10,15 @@ export function usePerfilViewModel() {
   const [reservas, setReservas] = useState<Reserva[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const [saldoMilhas, setSaldoMilhas] = useState(Number)
 
   const cliente = user?.role === 'client' ? user as Cliente : null;
-  const saldoMilhas = cliente?.saldoMilhas || 0;
-
-  const carregarDados = async () => {
+  const carregarDadosReservas = async () => {
     if (!user?.id) return;
-    
+
     setLoading(true);
     try {
       const reservasData = await reservaService.getReservas(user.id, {
-        estados: ['reservada', 'concluída', 'cancelada']
       });
       setReservas(reservasData);
     } catch (err) {
@@ -32,17 +28,53 @@ export function usePerfilViewModel() {
     }
   };
 
+  const carregarDadosCliente = async () => {
+    if (!user?.id) return;
+    setLoading(true);
+    try {
+      // const saldoMilhas = await clienteService.getSaldoMilhas(user!.id)
+      const saldoMilhas = cliente?.saldoMilhas
+      setSaldoMilhas(saldoMilhas ?? 0)
+    } catch (err) {
+      setError('Erro ao carregar reservas');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const cancelarReserva = async (reservaId: string) => {
     try {
+      const reserva = reservas.find(r => r.id === reservaId);
+  
+      // Verificação de estado permitido
+      if (!reserva || !['CRIADA', 'CHECK-IN'].includes(reserva.estado)) {
+        setError('Reserva não pode ser cancelada');
+        return;
+      }
+  
+      // Cancela a reserva no backend
       await reservaService.cancelarReserva(reservaId);
-      setReservas(reservas.map(r => 
-        r.id === reservaId ? { ...r, estado: 'cancelada' } : r
-      ));
+  
+      const milhasRestituir = reserva.milhasGastas ?? 0;
+      if (milhasRestituir > 0 && user?.id) {
+        // await clienteService.restituirMilhas(user.id, milhasRestituir, {
+        //   motivo: 'Cancelamento de reserva',
+        //   reservaId,
+        //   data: new Date().toISOString(),
+        // });
+      }
+      // Atualiza saldo de milhas no frontend
+      setSaldoMilhas(prev => prev + milhasRestituir);
+  
     } catch (err) {
       setError('Erro ao cancelar reserva');
     }
   };
-
+  
+  const carregarDados = async () => {
+    carregarDadosReservas();
+    carregarDadosCliente();
+  };
   useEffect(() => {
     carregarDados();
   }, [user?.id]);
