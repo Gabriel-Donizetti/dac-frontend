@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import { Alert, Button } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Stack,
+  Chip,
+} from "@mui/material";
 import { useMilhas } from "../view-models/useClienteMilhasViewModel";
 
-const ComprarMilhasView: React.FC = () => {
+const MilhasView: React.FC = () => {
   const { transactions, buyMiles } = useMilhas();
   const [valor, setValor] = useState<string>("");
   const [purchaseMessage, setPurchaseMessage] = useState<string>("");
-  const [showExtrato, setShowExtrato] = useState<boolean>(false);
 
   const handleCompra = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,75 +34,72 @@ const ComprarMilhasView: React.FC = () => {
     setPurchaseMessage("Compra de milhas realizada com sucesso!");
   };
 
-  const handleConsultarExtrato = () => {
-    setShowExtrato(!showExtrato);
-  };
-
   return (
-    <div className="comprar-milhas-container">
-      <h1>Comprar Milhas</h1>
-      <form onSubmit={handleCompra} className="compra-form">
-        <input
-          type="number"
-          placeholder="Valor (R$)"
-          value={valor}
-          onChange={(e) => setValor(e.target.value)}
-          className="input-valor"
-        />
-        <button type="submit" className="btn-comprar">
-          Comprar
-        </button>
-        <Button
-          variant="contained"
-          onClick={handleConsultarExtrato}
-          style={{
-            marginLeft: "1rem",
-            backgroundColor: "#567c8d",
-            color: "white",
-            height: "100%",
-          }}
-        >
-          Consultar Extrato
-        </Button>
+    <Container>
+      <Typography variant="h4" gutterBottom>
+        Comprar Milhas
+      </Typography>
+
+      <form onSubmit={handleCompra}>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <TextField
+            type="number"
+            label="Valor (R$)"
+            value={valor}
+            onChange={(e) => setValor(e.target.value)}
+            fullWidth
+          />
+          <Button type="submit" variant="contained" color="primary">
+            Comprar
+          </Button>
+        </Stack>
       </form>
 
       {purchaseMessage && (
-        <Alert severity="success" style={{ marginTop: "1rem" }}>
+        <Alert severity="success" sx={{ mt: 2 }}>
           {purchaseMessage}
         </Alert>
       )}
 
-      {showExtrato && (
-        <>
-          <h2 style={{ marginTop: "2rem" }}>Extrato de Milhas</h2>
-          <table className="extrato-table">
-            <thead>
-              <tr>
-                <th>Data/Hora</th>
-                <th>Código da Reserva</th>
-                <th>Valor (R$)</th>
-                <th>Milhas</th>
-                <th>Descrição</th>
-                <th>Tipo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((trans, idx) => (
-                <tr key={idx}>
-                  <td>{trans.data.toLocaleString()}</td>
-                  <td>{trans.codigoReserva}</td>
-                  <td>{trans.valor.toFixed(2)}</td>
-                  <td>{trans.milhas.toFixed(2)}</td>
-                  <td>{trans.descricao}</td>
-                  <td>{trans.tipo}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </>
-      )}
-    </div>
+
+      <Typography variant="h5" sx={{ mt: 4 }}>
+        Extrato de Milhas
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "primary.main" }}>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Data/Hora</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Código</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Valor (R$)</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Milhas</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Descrição</TableCell>
+              <TableCell sx={{ color: "white", fontWeight: "bold" }}>Tipo</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {transactions.map((trans, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{trans.data.toLocaleString()}</TableCell>
+                <TableCell>{trans.codigoReserva}</TableCell>
+                <TableCell>{trans.valor.toFixed(2)}</TableCell>
+                <TableCell>{trans.milhas.toFixed(2)}</TableCell>
+                <TableCell>{trans.descricao}</TableCell>
+                <TableCell>
+                  <Chip
+                    label={trans.tipo}
+                    color={trans.tipo === "ENTRADA" ? "success" : "error"}
+                    size="small"
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+    </Container>
   );
 };
 
-export default ComprarMilhasView;
+export default MilhasView;

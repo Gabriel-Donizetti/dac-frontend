@@ -1,6 +1,5 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './shared/contexts/AuthContext';
 import { PrivateRoute } from './shared/components/PrivateRoute';
@@ -9,6 +8,9 @@ import { LoginView } from './modules/auth/pages/LoginView';
 import { ClienteRoutes } from './modules/cliente';
 import { ThemeProvider } from '@mui/material/styles';
 import { Theme } from './Theme';
+import { VooRoutes } from './modules/voos/routes/VooRoutes';
+import { RegisterView } from './modules/auth/pages/RegisterView';
+import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
 import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
 import { RegisterView } from './modules/auth/pages/RegisterView';
 
@@ -36,16 +38,25 @@ const router = createBrowserRouter([
     ]
   },
   {
+    path: '/voo',
+    // element: <PrivateRoute allowedRoles={['employee']} />, // Sem children
+    children: [
+      {
+        path: '*', // Captura todas as sub-rotas
+        element: <VooRoutes />
+      }
+    ]
+  },
+  {
     path: '/funcionario',
     element: <PrivateRoute allowedRoles={['employee']} />,
     children: [
       {
-      path: '*', // Captura todas as sub-rotas
-          element: <FuncionarioRoutes />
+        path: '*', // Captura todas as sub-rotas
+        element: <FuncionarioRoutes />
       }
     ]
-
-  },
+  }
 ]);
 
 createRoot(document.getElementById('root')!).render(

@@ -1,4 +1,17 @@
-// modules/cliente/views/ReservaDetalheView.tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Typography,
+  CircularProgress,
+  Alert,
+  Chip,
+  IconButton
+} from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useReservaDetalheViewModel } from '../view-models/useReservaDetalheViewModel';
 
@@ -12,62 +25,64 @@ function ReservaDetalheView() {
   };
 
   return (
-    <div className="reserva-detalhe-container">
-      <button onClick={handleVoltar} className="btn-voltar">
-        &larr; Voltar para Perfil
-      </button>
+    <div style={{ padding: '24px', position: 'relative' }}>
+      <IconButton onClick={handleVoltar} style={{ position: 'absolute', top: 8, left: 8, color: "primary.main" }} aria-label="Voltar">
+        <ChevronLeftIcon />
+      </IconButton>
 
-      {loading && <p>Carregando detalhes da reserva...</p>}
-      {error && <p className="error">{error}</p>}
+      {loading && <CircularProgress />}
+      {error && <Alert severity="error">{error}</Alert>}
 
       {reserva && (
-        <div className="detalhe-reserva">
-          <h2>Detalhes da Reserva</h2>
-          
-          <div className="reserva-grid">
-            <div className="info-group">
-              <h3>Código</h3>
-              <p>{reserva.codigo}</p>
-            </div>
+        <>
+          <Typography variant="h5" gutterBottom>
+            Detalhes da Reserva
+          </Typography>
 
-            <div className="info-group">
-              <h3>Data/Hora</h3>
-              <p>
-                {new Date(reserva.dataHora).toLocaleDateString('pt-BR', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}
-              </p>
-            </div>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableBody>
+                <TableRow sx={{ backgroundColor: "primary.main" }}>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Código</strong></TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Data/Hora</strong></TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Rota</strong></TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Valor</strong></TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Milhas utilizadas</strong></TableCell>
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}><strong>Status</strong></TableCell>
+                </TableRow>
 
-            <div className="info-group">
-              <h3>Rota</h3>
-              <p>
-                {reserva.origem} → {reserva.destino}
-              </p>
-            </div>
-
-            <div className="info-group">
-              <h3>Valor</h3>
-              <p>R$ {reserva.valorReais.toFixed(2)}</p>
-            </div>
-
-            <div className="info-group">
-              <h3>Milhas utilizadas</h3>
-              <p>{reserva.milhasGastas.toLocaleString()}</p>
-            </div>
-
-            <div className="info-group">
-              <h3>Status</h3>
-              <p className={`status ${reserva.estado}`}>
-                {reserva.estado.toUpperCase()}
-              </p>
-            </div>
-          </div>
-        </div>
+                <TableRow>
+                  <TableCell>{reserva.codigo}</TableCell>
+                  <TableCell>
+                    {new Date(reserva.dataHora).toLocaleDateString('pt-BR', {
+                      day: '2-digit',
+                      month: 'long',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </TableCell>
+                  <TableCell>{reserva.origem} → {reserva.destino}</TableCell>
+                  <TableCell>R$ {reserva.valorReais.toFixed(2)}</TableCell>
+                  <TableCell>{reserva.milhasGastas.toLocaleString()}</TableCell>
+                  <TableCell>
+                    <Chip
+                      label={reserva.estado.toUpperCase()}
+                      color={
+                        reserva.estado === 'concluída'
+                          ? 'success'
+                          : reserva.estado === 'reservada'
+                            ? 'warning'
+                            : 'error'
+                      }
+                      variant="outlined"
+                    />
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
       )}
     </div>
   );
