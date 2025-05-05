@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
-import FuncionarioView from '../../home/pages/FuncionarioView';
-import FuncionarioCRUDView from '../../home/pages/FuncionarioCRUDView';
+import FuncionarioCRUDView from '../pages/FuncionarioCRUDView';
+import FuncionarioView from '../pages/FuncionarioView';
 
 
 function ProtectedLayout() {

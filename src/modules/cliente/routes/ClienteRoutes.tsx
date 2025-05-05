@@ -1,5 +1,5 @@
 // modules/cliente/routes/ClienteRoutes.tsx
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import PerfilView from '../pages/InitialPageView';
 import ReservaDetalheView from '../pages/ReservaDetalheView';
 import MeuPerfilView from '../pages/MeuPerfilView';
@@ -8,7 +8,7 @@ import { BuscaVoosView } from '../pages/BuscaVoosView';
 import { ConfirmarReservaView } from '../pages/ConfirmarReservaView';
 import MilhasView from '../pages/ClienteMilhas';
 import ClienteLayout from '../../../shared/components/Layout';
-import ConsultarExtratoView from '../pages/ConsultarExtratoView';
+// import ConsultarExtratoView from '../pages/ConsultarExtratoView';
 import  ComprarMilhasView from '../pages/ClienteMilhas';
 import CheckinView from '../pages/CheckinView';
 import { ClienteHeader } from '../components/ClienteHeader';
@@ -48,7 +48,7 @@ export function ClienteRoutes() {
           <Route path="confirmar/:vooId" element={<ConfirmarReservaView />} />
         </Route>
         <Route path="initial-page" element={<PerfilView />} />
-        <Route path="consulta-extrato" element={<ConsultarExtratoView />} />
+        {/* <Route path="consulta-extrato" element={<ConsultarExtratoView />} /> */}
         <Route path="comprarMilhas" element={<ComprarMilhasView />} />
         <Route path="checkin" element={<CheckinView />} />
         <Route path="*" element={<Navigate to="/cliente/initial-page" replace />} />

@@ -5,13 +5,13 @@ import VooPageView from '../pages/VooPageView';
 import VooFormView from '../pages/VooFormView';
 
 export function VooRoutes() {
-  // const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   // Redireciona imediatamente se não estiver autenticado ou não for funcionario
-  // if (!isAuthenticated || user?.role !== 'employee') {
-  //   console.log(isAuthenticated, user?.role)
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!isAuthenticated || user?.role !== 'employee') {
+    console.log(isAuthenticated, user?.role)
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <Routes>
