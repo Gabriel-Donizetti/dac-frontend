@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Typography, Container, Box } from "@mui/material";
+import { TextField, Button, Typography, Container, Box, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import { Voo } from "../models/Voo";
 import { useNavigate } from "react-router-dom";
-import { ArrowBack } from "@mui/icons-material"; 
+import { ArrowBack } from "@mui/icons-material";
 import { vooService } from "../services/vooService";
+import aeroportos from "../../auth/components/airport.json"; 
 
 export default function VooFormView() {
     const [dataHora, setDataHora] = useState<string>("");
@@ -71,18 +72,38 @@ export default function VooFormView() {
                 onChange={(e) => setDataHora(e.target.value)}
                 InputLabelProps={{ shrink: true }}
             />
-            <TextField
-                fullWidth
-                label="Aeroporto Origem"
-                value={origem}
-                onChange={(e) => setOrigem(e.target.value)}
-            />
-            <TextField
-                fullWidth
-                label="Aeroporto Destino"
-                value={destino}
-                onChange={(e) => setDestino(e.target.value)}
-            />
+
+            {/* Dropdown Origem */}
+            <FormControl fullWidth margin="normal">
+                <InputLabel>Origem</InputLabel>
+                <Select
+                    value={origem}
+                    onChange={(e) => setOrigem(e.target.value)}
+                    label="Origem"
+                >
+                    {aeroportos.map((aeroporto) => (
+                        <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                            {aeroporto.nome} ({aeroporto.codigoIATA})
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            <FormControl fullWidth margin="normal">
+                <InputLabel>Destino</InputLabel>
+                <Select
+                    value={destino}
+                    onChange={(e) => setDestino(e.target.value)}
+                    label="Destino"
+                >
+                    {aeroportos.map((aeroporto) => (
+                        <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                            {aeroporto.nome} ({aeroporto.codigoIATA})
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
             <TextField
                 fullWidth
                 label="Valor (R$)"
