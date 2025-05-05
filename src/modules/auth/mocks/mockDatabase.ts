@@ -25,5 +25,14 @@ export const mockDatabase: Record<string, MockUser> = {
     password: "senha456",
     cpf: "123.456.789-00",
     telefone: "11111111"
+  },
+  "func_pre@gmail.com": {
+    id: "user-789",
+    nome: "Maria Souza",
+    email: "func_pre@gmail.com",
+    role: "employee",
+    password: "TADS",
+    cpf: "907.692.810-01",
+    telefone: "11111111"
   }
 };
