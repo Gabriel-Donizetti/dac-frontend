@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Voo } from "../models/Voo";
+import { Voo } from "../../funcionario/models/Voo";
 import { vooService } from "../services/vooService";
 import {
   Container,

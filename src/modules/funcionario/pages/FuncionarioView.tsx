@@ -13,7 +13,6 @@ import {
   Paper,
 } from '@mui/material';
 import { FuncionarioViewModel } from '../../funcionario/models/FuncionarioViewModel';
-import { FuncionarioHeader } from '../../funcionario/components/FuncionarioHeader';
 
 const FuncionarioView: React.FC = () => {
   const {
@@ -25,24 +24,10 @@ const FuncionarioView: React.FC = () => {
 
   return (
     <>
-    <FuncionarioHeader />
     <Box sx={{ padding: 2 }}>
       <Typography variant="h4" sx={{ mb: 2 }}>
         Painel do Funcionário
       </Typography>
-
-      <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-        <Button variant="contained" color="primary" >
-          Cadastro de Voo
-        </Button>
-        <Button variant="contained" color="secondary" >
-          Listagem de Funcionários
-        </Button>
-        <Button variant="contained" color="success" onClick={() => navigate('/funcionario/crud')}>
-          Inserir/Alterar um Funcionário
-        </Button>
-
-      </Box>
 
       <Typography variant="h6" sx={{ mb: 2 }}>
         Voos para as Próximas 48h

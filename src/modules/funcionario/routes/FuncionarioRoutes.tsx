@@ -1,18 +1,12 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+// modules/funcionarios/routes/FuncionarioRoutes.tsx
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import FuncionarioCRUDView from '../pages/FuncionarioCRUDView';
 import FuncionarioView from '../pages/FuncionarioView';
+import FuncionarioLayout from '../../../shared/components/Layout';
 
-
-function ProtectedLayout() {
-  return (
-    <>
-      <main style={{ padding: "1rem" }}>
-        <Outlet />
-      </main>
-    </>
-  );
-}
+import VooFormView from '../pages/VooFormView';
+import VooPageView from '../pages/VooPageView';
 
 export function FuncionarioRoutes() {
   const { isAuthenticated, user } = useAuth();
@@ -24,10 +18,12 @@ export function FuncionarioRoutes() {
 
   return (
     <Routes>
-      <Route element={<ProtectedLayout />}>
+      <Route element={<FuncionarioLayout role="funcionario" />}>
         <Route index element={<Navigate to="initial-page" replace />} />
         <Route path="initial-page" element={<FuncionarioView />} />
         <Route path="crud" element={<FuncionarioCRUDView />} />
+        <Route path="voos" element={<VooPageView />} />
+        <Route path="cadastro-voo" element={<VooFormView />} />
         <Route path="*" element={<Navigate to="/funcionario/initial-page" replace />} />
       </Route>
     </Routes>

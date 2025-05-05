@@ -15,21 +15,30 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 import FlightIcon from "@mui/icons-material/Flight";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
 
-export default function Layout() {
+interface LayoutProps {
+  role: string;
+}
+
+export default function Layout({ role }: LayoutProps) {
+  
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const { logout } = useAuth();
 
   const menuClientItens = [
     { text: "Página inicial", icon: <HomeIcon />, path: "initial-page" },
@@ -38,24 +47,46 @@ export default function Layout() {
     { text: "Milhas", icon: <AttachMoneyIcon />, path: "milhas" },
   ];
 
+  const menuFuncionarios = [
+    { text: "Página inicial", icon: <HomeIcon />, path: "initial-page" },
+    { text: "Funcionários", icon: <AccountCircleIcon />, path: "/funcionario/crud" },
+    { text: "Voos", icon: <FlightIcon />, path: "/funcionario/voos" },
+  ];
+
+  const menuItens = role === "client" ? menuClientItens : menuFuncionarios;
+
   const drawer = (
-    <div>
-      <Toolbar>
-        <Typography variant="h6">Menu</Typography>
-      </Toolbar>
-      <Divider />
-      <List>
-        {menuClientItens.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={() => navigate(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+    <Box display="flex" flexDirection="column" height="100%">
+      <Box>
+        <Toolbar>
+          <Typography variant="h6">✈️</Typography>
+        </Toolbar>
+        <Divider />
+        <List>
+          {menuItens.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton onClick={() => navigate(item.path)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+      <Box mt="auto">
+        <Divider />
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton onClick={logout}>
+              <ListItemIcon>
+                <LogoutIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sair" />
             </ListItemButton>
           </ListItem>
-        ))}
-      </List>
-      <Divider />
-    </div>
+        </List>
+      </Box>
+    </Box>
   );
 
   return (
@@ -63,7 +94,10 @@ export default function Layout() {
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: { sm: `calc(100% - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` } }}
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          ml: { sm: `${drawerWidth}px` },
+        }}
       >
         <Toolbar>
           <IconButton
@@ -76,7 +110,7 @@ export default function Layout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Área do Cliente
+            Área do {role}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -126,5 +160,3 @@ export default function Layout() {
     </Box>
   );
 }
-
-

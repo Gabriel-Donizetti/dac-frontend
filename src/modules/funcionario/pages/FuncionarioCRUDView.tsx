@@ -12,7 +12,6 @@ import {
   Paper,
 } from '@mui/material';
 import { FuncionarioController, Employee } from '../models/FuncionarioController';
-import { FuncionarioHeader } from '../../funcionario/components/FuncionarioHeader';
 
 const FuncionarioCRUDView: React.FC = () => {
   const { employees, createEmployee, updateEmployee, removeEmployee } = FuncionarioController();
@@ -105,21 +104,17 @@ const FuncionarioCRUDView: React.FC = () => {
 
   return (
     <>
-      {/* Barra Superior Padrão */}
-      <FuncionarioHeader />
-
       <Box sx={{ padding: 2 }}>
         <Typography variant="h4" sx={{ mb: 2 }}>Página do Funcionário</Typography>
 
-        {/* Botões no topo */}
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
-          <Button variant="contained" color="primary" onClick={() => setActiveTab('create')}>
+          <Button variant="contained" color="secondary" onClick={() => setActiveTab('create')}>
             Inserir Funcionário
           </Button>
           <Button variant="contained" color="secondary" onClick={() => setActiveTab('update')}>
             Alterar Funcionário
           </Button>
-          <Button variant="contained" color="success" onClick={() => setActiveTab('list')}>
+          <Button variant="contained" color="secondary" onClick={() => setActiveTab('list')}>
             Lista de Funcionários
           </Button>
         </Box>

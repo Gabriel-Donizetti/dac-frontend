@@ -11,18 +11,6 @@ import ClienteLayout from '../../../shared/components/Layout';
 // import ConsultarExtratoView from '../pages/ConsultarExtratoView';
 import  ComprarMilhasView from '../pages/ClienteMilhas';
 import CheckinView from '../pages/CheckinView';
-import { ClienteHeader } from '../components/ClienteHeader';
-
-function ProtectedLayout() {
-  return (
-    <>
-      <ClienteHeader />
-      <main style={{ padding: '1rem' }}>
-        <Outlet />
-      </main>
-    </>
-  );
-}
 
 export function ClienteRoutes() {
   const { isAuthenticated, user } = useAuth();
@@ -35,7 +23,7 @@ export function ClienteRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<ClienteLayout />}>
+      <Route path="/" element={<ClienteLayout role={user.role} />}>
         <Route index element={<Navigate to="initial-page" replace />} />
         <Route path="initial-page" element={<PerfilView />} />
         <Route path="reservas/:reservaId" element={<ReservaDetalheView />} />

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Container, Box } from "@mui/material";
 import { Voo } from "../models/Voo";
-import { vooService } from "../services/vooService";
 import { useNavigate } from "react-router-dom";
 import { ArrowBack } from "@mui/icons-material"; 
+import { vooService } from "../services/vooService";
 
 export default function VooFormView() {
     const [dataHora, setDataHora] = useState<string>("");
@@ -42,7 +42,7 @@ export default function VooFormView() {
         vooService.adicionar(voo);
         setCodigoGerado(codigoVoo);
 
-        navigate("/voo/voos");
+        navigate("/funcionario/voos");
 
         setDataHora("");
         setOrigem("");
