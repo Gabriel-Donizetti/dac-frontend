@@ -1,3 +1,4 @@
+import { vooService } from "../services/vooService.ts";
 import { Voo } from "../../funcionario/models/Voo.ts";
 
 export class VooViewModel {

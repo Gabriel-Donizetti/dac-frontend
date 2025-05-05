@@ -1,4 +1,4 @@
-import { Voo } from "../models/Voo";
+import { Voo } from "../../funcionario/models/Voo";
 
 const VOOS_STORAGE_KEY = "voos";
 

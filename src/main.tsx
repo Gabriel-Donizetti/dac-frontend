@@ -8,11 +8,8 @@ import { LoginView } from './modules/auth/pages/LoginView';
 import { ClienteRoutes } from './modules/cliente';
 import { ThemeProvider } from '@mui/material/styles';
 import { Theme } from './Theme';
-import { VooRoutes } from './modules/voos/routes/VooRoutes';
 import { RegisterView } from './modules/auth/pages/RegisterView';
 import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
-import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
-import { RegisterView } from './modules/auth/pages/RegisterView';
 
 const router = createBrowserRouter([
   {
@@ -34,16 +31,6 @@ const router = createBrowserRouter([
       {
         path: '*', // Captura todas as sub-rotas
         element: <ClienteRoutes />
-      }
-    ]
-  },
-  {
-    path: '/voo',
-    // element: <PrivateRoute allowedRoles={['employee']} />, // Sem children
-    children: [
-      {
-        path: '*', // Captura todas as sub-rotas
-        element: <VooRoutes />
       }
     ]
   },
