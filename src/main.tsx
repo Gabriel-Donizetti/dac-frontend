@@ -9,6 +9,10 @@ import { ClienteRoutes } from './modules/cliente';
 import { ThemeProvider } from '@mui/material/styles';
 import { Theme } from './Theme';
 import { VooRoutes } from './modules/voos/routes/VooRoutes';
+import { RegisterView } from './modules/auth/pages/RegisterView';
+import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
+import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoutes';
+import { RegisterView } from './modules/auth/pages/RegisterView';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginView />
+  },
+  {
+    path: '/register',
+    element: <RegisterView />
   },
   {
     path: '/cliente',
@@ -36,6 +44,16 @@ const router = createBrowserRouter([
       {
         path: '*', // Captura todas as sub-rotas
         element: <VooRoutes />
+      }
+    ]
+  },
+  {
+    path: '/funcionario',
+    element: <PrivateRoute allowedRoles={['employee']} />,
+    children: [
+      {
+        path: '*', // Captura todas as sub-rotas
+        element: <FuncionarioRoutes />
       }
     ]
   }

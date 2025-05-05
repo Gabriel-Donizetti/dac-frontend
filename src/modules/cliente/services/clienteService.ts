@@ -1,5 +1,6 @@
 // import api from '../../../services/api';
-// import { Cliente } from '../models/ClienteTypes';
+import { mockDatabase, MockUser } from "../../auth/mocks/mockDatabase";
+import { Cliente } from "../models/ClienteTypes";
 
 // export const clienteService = {
 //   async getSaldoMilhas(clienteId: string): Promise<number> {
@@ -9,8 +10,44 @@
 // };
 
 export const clienteService = {
+
+
   async getSaldoMilhas(clienteId: string): Promise<number> {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return 2000; // Saldo mockado
-  }
+    console.log(clienteId)
+    return 3000; 
+  },
+
+  async restituirMilhas(){
+
+  },
+
+  async debitarMilhas(){
+
+  },
+
+  async cadastrar(cliente: Cliente & { password: string }) {
+    
+    const novoCliente: MockUser = {
+      id: `user-${Date.now()}`,
+      nome: cliente.nome,
+      email: cliente.email,
+      role: "client",
+      password: cliente.password,
+      cpf: cliente.cpf,
+      cep: cliente.cep,
+      endereco: cliente.endereco,
+      cidade: cliente.cidade,
+      estado: cliente.estado,
+      saldoMilhas: cliente.saldoMilhas || 0
+    };
+
+    // Adiciona ao mockDatabase
+    mockDatabase[cliente.email] = novoCliente;
+    //VERIFICAR STATUS SE FOI CADASTRADO COM SUCESSO E RETORNAR DE MANEIRA CORRETA
+    console.log('Cliente cadastrado:', novoCliente);
+    console.log('Database atual:', mockDatabase);
+    
+    return novoCliente;
+  },
 };
+;
