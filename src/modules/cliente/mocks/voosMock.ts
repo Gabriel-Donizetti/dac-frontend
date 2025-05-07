@@ -41,36 +41,8 @@ export const voosMock: Voo[] = [
     poltronas: 20,
     poltronasOcupadas: 0,
     status: "CONFIRMADO",
-    preco: 350.00,
-    milhasNecessarias: 5000,
-    assentosDisponiveis: 20
+    preco: 420.00,
+    milhasNecessarias: 7000,
+    assentosDisponiveis: 15
   },
-  {
-    codigo: 'TADS0004',
-    dataHora: '2025-09-11T09:30Z-03:00',
-    origem: 'CWB (Curitiba)',
-    destino: 'GIG (Rio de Janeiro)',
-    valorReais: 350.00,
-    valorMilhas: 5000,
-    poltronas: 20,
-    poltronasOcupadas: 0,
-    status: "CONFIRMADO",
-    preco: 350.00,
-    milhasNecessarias: 5000,
-    assentosDisponiveis: 20
-  },
-  {
-    codigo: 'TADS0005',
-    dataHora: '2025-10-12T08:30Z-03:00',
-    origem: 'CWB (Curitiba)',
-    destino: 'POA (Porto Alegre)',
-    valorReais: 350.00,
-    valorMilhas: 5000,
-    poltronas: 20,
-    poltronasOcupadas: 0,
-    status: "CONFIRMADO",
-    preco: 350.00,
-    milhasNecessarias: 5000,
-    assentosDisponiveis: 20
-  }
 ];

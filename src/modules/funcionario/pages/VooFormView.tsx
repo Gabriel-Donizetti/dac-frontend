@@ -63,7 +63,6 @@ export default function VooFormView() {
                     Novo Voo
                 </Typography>
             </Box>
-
             <Container maxWidth="sm">
                 <TextField
                     fullWidth
@@ -72,7 +71,6 @@ export default function VooFormView() {
                     value={dataHora}
                     onChange={(e) => setDataHora(e.target.value)}
                 />
-
                 <FormControl>
                     <InputLabel>Origem</InputLabel>
                     <Select
