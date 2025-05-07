@@ -7,6 +7,7 @@ interface Props {
   onVerDetalhes: (id: string) => void;
   onCancelar: (id: string) => void;
 }
+
 export function TabelaReservas({
   reservas,
   saldoMilhas,

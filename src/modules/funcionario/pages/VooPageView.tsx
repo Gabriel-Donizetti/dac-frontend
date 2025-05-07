@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Voo } from "../../funcionario/models/Voo";
+import { Voo } from "../models/VooTypes";
 import { vooService } from "../services/vooService";
 import {
   Container,
@@ -13,13 +13,24 @@ import {
   Paper,
   Button,
   Box,
+  CircularProgress,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function VooPageView() {
   const [voos, setVoos] = useState<Voo[]>([]);
 
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
-    setVoos(vooService.listar());
+    const carregarVoos = async () => {
+      const resposta = await vooService.listar();
+      setVoos(resposta);
+      setLoading(false);
+    };
+    carregarVoos();
   }, []);
 
   const formatarData = (dataHora: string) => {
@@ -38,12 +49,16 @@ export default function VooPageView() {
     <Container maxWidth="md">
       <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={2}>
         <Typography variant="h5">Voos</Typography>
-        <Button variant="contained" href="cadastro-voo" size="small" sx={{ width: "fit-content", textTransform: "none" }}>
+        <Button variant="contained" size="small" onClick={() => navigate("/funcionario/cadastro-voo")} sx={{ width: "fit-content", textTransform: "none" }}>
           Novo
         </Button>
       </Box>
 
-      {voos.length === 0 ? (
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="50vh">
+          <CircularProgress />
+        </Box>
+      ) : voos.length === 0 ? (
         <Typography variant="subtitle1" color="textSecondary">
           Nenhum voo cadastrado.
         </Typography>
@@ -58,6 +73,7 @@ export default function VooPageView() {
                 <TableCell>Data/Hora</TableCell>
                 <TableCell>Valor (R$)</TableCell>
                 <TableCell>Poltronas</TableCell>
+                <TableCell>Situação</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -69,6 +85,7 @@ export default function VooPageView() {
                   <TableCell>{formatarData(v.dataHora)}</TableCell>
                   <TableCell>{v.valorReais}</TableCell>
                   <TableCell>{v.poltronas}</TableCell>
+                  <TableCell>{v.status}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

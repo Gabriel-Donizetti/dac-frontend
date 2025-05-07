@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -12,23 +11,13 @@ import {
   TableRow,
   Paper,
 } from '@mui/material';
-import { FuncionarioViewModel } from '../../funcionario/models/FuncionarioViewModel';
+import { FuncionarioViewModel } from '../view-models/useFuncionarioViewModel';
 
 const FuncionarioView: React.FC = () => {
-  const {
-    flights,
-    loading,
-    error,
-  } = FuncionarioViewModel();
-  const navigate = useNavigate();
+  const { flights, loading, error } = FuncionarioViewModel();
 
   return (
-    <>
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        Painel do Funcionário
-      </Typography>
-
       <Typography variant="h6" sx={{ mb: 2 }}>
         Voos para as Próximas 48h
       </Typography>
@@ -49,31 +38,19 @@ const FuncionarioView: React.FC = () => {
             </TableHead>
             <TableBody>
               {flights.map((flight) => (
-                <TableRow key={flight.id}>
-                  <TableCell>{flight.data.toLocaleString()}</TableCell>
+                <TableRow key={flight.codigo}>
+                  <TableCell>{new Date(flight.dataHora).toLocaleString()}</TableCell>
                   <TableCell>{flight.origem}</TableCell>
                   <TableCell>{flight.destino}</TableCell>
                   <TableCell>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="primary"
-                      >
+                    <Box sx={{ display: 'flex' }}>
+                      <Button variant="contained" size="small" color="primary">
                         Confirmar Embarque
                       </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="error"
-                      >
+                      <Button variant="contained" size="small" color="error">
                         Cancelar Voo
                       </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="success"
-                      >
+                      <Button variant="contained" size="small" color="success">
                         Realizar Voo
                       </Button>
                     </Box>
@@ -85,9 +62,7 @@ const FuncionarioView: React.FC = () => {
         </TableContainer>
       )}
     </Box>
-    </>
   );
-  
 };
 
 export default FuncionarioView;

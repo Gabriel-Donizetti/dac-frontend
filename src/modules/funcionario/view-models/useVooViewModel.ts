@@ -1,5 +1,5 @@
 import { vooService } from "../services/vooService.ts";
-import { Voo } from "../../funcionario/models/Voo.ts";
+import { Voo } from "../models/VooTypes.ts";
 
 export class VooViewModel {
   adicionarVoo(

@@ -6,6 +6,7 @@ import { ArrowBack } from '@mui/icons-material';
 export function ConfirmarReservaView() {
     const theme = useTheme();
     const navigate = useNavigate();
+    
     const {
         vooSelecionado,
         quantidade,
@@ -27,22 +28,22 @@ export function ConfirmarReservaView() {
 
     return (
         <Box sx={{ p: 4 }}>
-            <Button
-                startIcon={<ArrowBack />}
-                onClick={() => navigate('/cliente/reservar')}
-                sx={{ mb: 2 }}
-            >
-                Voltar para Busca
-            </Button>
+            <Paper elevation={3} sx={{ p: 3 }}>
+                <Box display="flex" justifyContent="space-between" marginBottom={2}>
+                    <Button size="small" onClick={() => navigate('/cliente/reservar')} sx={{ color: 'primary.main', width: "fit-content", textTransform: "none" }}>
+                        <ArrowBack />
+                    </Button>
 
-            <Paper elevation={3} sx={{ p: 3, borderRadius: theme.shape.borderRadius }}>
-                <Typography variant="h5" gutterBottom sx={{ color: theme.palette.primary.main }}>
-                    Confirmar Reserva
-                </Typography>
+                    <Typography variant="h5" gutterBottom sx={{ flexGrow: 1, textAlign: "center" }}>
+                        Confirmar Reserva
+                    </Typography>
 
-                <Box sx={{ mb: 3 }}>
-                    <Typography variant="h6">Detalhes do Voo</Typography>
-                    <Divider sx={{ my: 1 }} />
+                </Box>
+
+                <Divider sx={{ my: 1 }} />
+
+                <Box sx={{ m: 3 }}>
+                    <Typography variant="h6" >Detalhes do Voo</Typography>
                     <Box display="grid" gridTemplateColumns="repeat(2, 1fr)" gap={2}>
                         <Box>
                             <Typography><strong>Código:</strong> {vooSelecionado.codigo}</Typography>
@@ -51,22 +52,22 @@ export function ConfirmarReservaView() {
                         </Box>
                         <Box>
                             <Typography><strong>Data/Hora:</strong> {new Date(vooSelecionado.dataHora).toLocaleString('pt-BR')}</Typography>
-                            <Typography><strong>Preço unitário:</strong> R$ {vooSelecionado.preco.toFixed(2)}</Typography>
-                            <Typography><strong>Milhas por passagem:</strong> {vooSelecionado.milhasNecessarias.toLocaleString()}</Typography>
+                            <Typography><strong>Preço unitário:</strong> R$ {vooSelecionado.valorReais.toFixed(2)}</Typography>
+                            <Typography><strong>Milhas por passagem:</strong> {vooSelecionado.valorMilhas.toLocaleString()}</Typography>
                         </Box>
                     </Box>
                 </Box>
 
-                <Box sx={{ mb: 3 }}>
-                    <Typography variant="h6">Informações da Reserva</Typography>
-                    <Divider sx={{ my: 1 }} />
+                <Divider sx={{ my: 1 }} />
 
+                <Box sx={{ m: 3 }}>
+                    <Typography variant="h6">Informações da Reserva</Typography>
                     <TextField
                         label="Quantidade de passagens"
                         type="number"
                         value={quantidade}
                         onChange={(e) => setQuantidade(Math.max(1, parseInt(e.target.value) || 1))}
-                        inputProps={{ min: 1, max: vooSelecionado.assentosDisponiveis }}
+                        inputProps={{ min: 1, max: vooSelecionado.poltronas }}
                         sx={{ mb: 2 }}
                         fullWidth
                     />
@@ -83,9 +84,10 @@ export function ConfirmarReservaView() {
                     </Box>
                 </Box>
 
-                <Box sx={{ mb: 3 }}>
+                <Divider sx={{ my: 1 }} />
+
+                <Box sx={{ m: 3 }}>
                     <Typography variant="h6">Pagamento com Milhas</Typography>
-                    <Divider sx={{ my: 1 }} />
 
                     <Typography><strong>Saldo disponível:</strong> {saldoMilhas.toLocaleString()} milhas</Typography>
 
@@ -138,7 +140,7 @@ export function ConfirmarReservaView() {
                     }}
                     fullWidth
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Confirmar Reserva'}
+                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Confirmar'}
                 </Button>
             </Paper>
         </Box>

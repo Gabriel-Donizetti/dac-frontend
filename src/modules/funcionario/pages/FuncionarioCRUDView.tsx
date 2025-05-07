@@ -16,7 +16,7 @@ import { FuncionarioController, Employee } from '../models/FuncionarioController
 const FuncionarioCRUDView: React.FC = () => {
   const { employees, createEmployee, updateEmployee, removeEmployee } = FuncionarioController();
 
-  const [activeTab, setActiveTab] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<string>('list');
 
   const [newEmployee, setNewEmployee] = useState({
     name: '',

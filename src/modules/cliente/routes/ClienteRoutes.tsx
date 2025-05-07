@@ -1,6 +1,6 @@
 // modules/cliente/routes/ClienteRoutes.tsx
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-import PerfilView from '../pages/InitialPageView';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import InitialPageView from '../pages/InitialPageView';
 import ReservaDetalheView from '../pages/ReservaDetalheView';
 import MeuPerfilView from '../pages/MeuPerfilView';
 import { useAuth } from '../../../shared/contexts/AuthContext';
@@ -25,7 +25,7 @@ export function ClienteRoutes() {
     <Routes>
       <Route path="/" element={<ClienteLayout role={user.role} />}>
         <Route index element={<Navigate to="initial-page" replace />} />
-        <Route path="initial-page" element={<PerfilView />} />
+        <Route path="initial-page" element={<InitialPageView />} />
         <Route path="reservas/:reservaId" element={<ReservaDetalheView />} />
         <Route path="meu-perfil" element={<MeuPerfilView />} />
         <Route path="reservar" element={<BuscaVoosView />} />
@@ -35,7 +35,7 @@ export function ClienteRoutes() {
           <Route index element={<BuscaVoosView />} />
           <Route path="confirmar/:vooId" element={<ConfirmarReservaView />} />
         </Route>
-        <Route path="initial-page" element={<PerfilView />} />
+        <Route path="initial-page" element={<InitialPageView />} />
         {/* <Route path="consulta-extrato" element={<ConsultarExtratoView />} /> */}
         <Route path="comprarMilhas" element={<ComprarMilhasView />} />
         <Route path="checkin" element={<CheckinView />} />

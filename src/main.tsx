@@ -13,7 +13,7 @@ import { FuncionarioRoutes } from './modules/funcionario/routes/FuncionarioRoute
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <HomeView />
   },
   {

@@ -28,7 +28,6 @@ function PerfilView() {
   if (error) return <div>Erro: {error}</div>;
   if (!user) return <div>Usuário não encontrado</div>;
 
-
   return (
     <Box sx={{ display: "flex", height: "100vh", width: "100vw" }}>
       <Box sx={{ width: 450, paddingLeft: 1, display: "flex", flexDirection: "column", justifyContent: "start" }}>

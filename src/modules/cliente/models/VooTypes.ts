@@ -1,13 +1,4 @@
-export interface Voo {
-    id: string;
-    codigo: string;
-    origem: string;
-    destino: string;
-    dataHora: string;
-    preco: number;
-    milhasNecessarias: number;
-    assentosDisponiveis: number;
-}
+import { Voo } from "../../funcionario/models/VooTypes";
 
 export interface Reserva {
     id: string;

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, Typography, Container, Box } from "@mui/material";
-import { Voo } from "../models/Voo";
+import { TextField, Button, Typography, Container, Box, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { Voo } from "../models/VooTypes";
 import { useNavigate } from "react-router-dom";
-import { ArrowBack } from "@mui/icons-material"; 
+import { ArrowBack } from "@mui/icons-material";
 import { vooService } from "../services/vooService";
+import aeroportos from "../../auth/components/airport.json";
 
 export default function VooFormView() {
     const [dataHora, setDataHora] = useState<string>("");
@@ -21,11 +22,11 @@ export default function VooFormView() {
         setDataHora(dataHoraFormatada);
     }, []);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const codigoVoo = "TADS" + Math.floor(Math.random() * 10000);
         const valorMilhas = Math.floor(parseFloat(valorReais) * 100);
         const poltronasOcupadas = 0;
-        const status: "CONFIRMADO" = "CONFIRMADO";
+        const status = "CONFIRMADO";
 
         const voo: Voo = {
             codigo: codigoVoo,
@@ -39,7 +40,7 @@ export default function VooFormView() {
             status,
         };
 
-        vooService.adicionar(voo);
+        await vooService.adicionar(voo);
         setCodigoGerado(codigoVoo);
 
         navigate("/funcionario/voos");
@@ -52,57 +53,77 @@ export default function VooFormView() {
     };
 
     return (
-        <Container maxWidth="sm">
-            <Box display="flex" alignItems="center" marginBottom={2}>
-                <Button href="voos" size="small" sx={{ color: 'primary.main', width: "fit-content", textTransform: "none" }}>
+        <Container>
+            <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
+                <Button onClick={() => navigate("/funcionario/voos")} size="small" sx={{ color: 'primary.main', width: "fit-content", textTransform: "none" }}>
                     <ArrowBack />
                 </Button>
 
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" gutterBottom sx={{ flexGrow: 1, textAlign: "center" }}>
                     Novo Voo
                 </Typography>
             </Box>
 
-            <TextField
-                fullWidth
-                label="Data/Hora"
-                type="datetime-local"
-                value={dataHora}
-                onChange={(e) => setDataHora(e.target.value)}
-                InputLabelProps={{ shrink: true }}
-            />
-            <TextField
-                fullWidth
-                label="Aeroporto Origem"
-                value={origem}
-                onChange={(e) => setOrigem(e.target.value)}
-            />
-            <TextField
-                fullWidth
-                label="Aeroporto Destino"
-                value={destino}
-                onChange={(e) => setDestino(e.target.value)}
-            />
-            <TextField
-                fullWidth
-                label="Valor (R$)"
-                type="number"
-                value={valorReais}
-                onChange={(e) => setValorReais(e.target.value)}
-            />
-            <TextField
-                fullWidth
-                label="Poltronas"
-                type="number"
-                value={poltronas}
-                onChange={(e) => setPoltronas(e.target.value)}
-            />
+            <Container maxWidth="sm">
+                <TextField
+                    fullWidth
+                    label="Data/Hora"
+                    type="datetime-local"
+                    value={dataHora}
+                    onChange={(e) => setDataHora(e.target.value)}
+                />
 
-            <Box display="flex" justifyContent="center" marginTop={2}>
-                <Button variant="contained" onClick={handleSubmit}>
-                    Cadastrar
-                </Button>
-            </Box>
+                <FormControl>
+                    <InputLabel>Origem</InputLabel>
+                    <Select
+                        value={origem}
+                        onChange={(e) => setOrigem(e.target.value)}
+                        label="Origem"
+                    >
+                        {aeroportos.map((aeroporto) => (
+                            <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                                {aeroporto.nome} ({aeroporto.codigoIATA})
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <FormControl>
+                    <InputLabel>Destino</InputLabel>
+                    <Select
+                        value={destino}
+                        onChange={(e) => setDestino(e.target.value)}
+                        label="Destino"
+                    >
+                        {aeroportos.map((aeroporto) => (
+                            <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                                {aeroporto.nome} ({aeroporto.codigoIATA})
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <TextField
+                    fullWidth
+                    label="Valor (R$)"
+                    type="number"
+                    value={valorReais}
+                    onChange={(e) => setValorReais(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Poltronas"
+                    type="number"
+                    value={poltronas}
+                    onChange={(e) => setPoltronas(e.target.value)}
+                />
+
+                <Box display="flex" justifyContent="center">
+                    <Button variant="contained" fullWidth onClick={handleSubmit}>
+                        Cadastrar
+                    </Button>
+                </Box>
+            </Container>
 
             {codigoGerado && (
                 <Box marginTop={2} textAlign="center">

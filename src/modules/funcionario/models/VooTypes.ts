@@ -7,6 +7,9 @@ export type Voo = {
     valorMilhas: number;
     poltronas: number;
     poltronasOcupadas: number;
-    status: "CONFIRMADO";
+    status: string;
+    preco?: number;
+    milhasNecessarias?: number;
+    assentosDisponiveis?: number;
   };
   

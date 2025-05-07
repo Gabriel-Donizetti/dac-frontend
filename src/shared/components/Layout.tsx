@@ -110,7 +110,7 @@ export default function Layout({ role }: LayoutProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Área do {role}
+            Área do {role == 'client' ? 'cliente' : 'funcionário'}
           </Typography>
         </Toolbar>
       </AppBar>

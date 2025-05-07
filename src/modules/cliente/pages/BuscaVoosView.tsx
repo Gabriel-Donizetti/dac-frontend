@@ -1,5 +1,7 @@
-import { Box, TextField, Button, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme, Alert, CircularProgress } from '@mui/material';
+import { Box, Button, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, useTheme, Alert, CircularProgress, FormControl, InputLabel, Select, MenuItem, OutlinedInput, IconButton } from '@mui/material';
 import { useReservaViewModel } from '../view-models/useReservaViewModel';
+import aeroportos from "../../auth/components/airport.json";
+import CloseIcon from "@mui/icons-material/Close";
 
 export function BuscaVoosView() {
     const theme = useTheme();
@@ -23,23 +25,75 @@ export function BuscaVoosView() {
                 </Typography>
 
                 <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-                    <TextField
-                        label="Origem (opcional)"
-                        value={origem}
-                        onChange={(e) => setOrigem(e.target.value)}
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Ex: GRU"
-                    />
-                    <TextField
-                        label="Destino (opcional)"
-                        value={destino}
-                        onChange={(e) => setDestino(e.target.value)}
-                        fullWidth
-                        variant="outlined"
-                        placeholder="Ex: GIG"
-                    />
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>Origem</InputLabel>
+                        <Select
+                            value={origem}
+                            onChange={(e) => setOrigem(e.target.value)}
+                            input={
+                                <OutlinedInput
+                                    label="Origem"
+                                    endAdornment={
+                                        origem ? (
+                                            <IconButton
+                                                size="small"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setOrigem("");
+                                                }}
+                                                edge="end"
+                                                sx={{ mr: 1 }}
+                                            >
+                                                <CloseIcon fontSize="small" />
+                                            </IconButton>
+                                        ) : null
+                                    }
+                                />
+                            }
+                        >
+                            {aeroportos.map((aeroporto) => (
+                                <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                                    {aeroporto.nome} ({aeroporto.codigoIATA})
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    <FormControl fullWidth variant="outlined">
+                        <InputLabel>Destino</InputLabel>
+                        <Select
+                            value={destino}
+                            onChange={(e) => setDestino(e.target.value)}
+                            input={
+                                <OutlinedInput
+                                    label="Destino"
+                                    endAdornment={
+                                        destino ? (
+                                            <IconButton
+                                                size="small"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setDestino("");
+                                                }}
+                                                edge="end"
+                                                sx={{ mr: 1 }}
+                                            >
+                                                <CloseIcon fontSize="small" />
+                                            </IconButton>
+                                        ) : null
+                                    }
+                                />
+                            }
+                        >
+                            {aeroportos.map((aeroporto) => (
+                                <MenuItem key={aeroporto.codigoIATA} value={aeroporto.codigoIATA}>
+                                    {aeroporto.nome} ({aeroporto.codigoIATA})
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </Box>
+
 
                 <Button
                     variant="contained"
@@ -79,15 +133,15 @@ export function BuscaVoosView() {
                             </TableHead>
                             <TableBody>
                                 {voos.map((voo) => (
-                                    <TableRow key={voo.id}>
+                                    <TableRow key={voo.codigo}>
                                         <TableCell>{voo.codigo}</TableCell>
                                         <TableCell>{voo.origem}</TableCell>
                                         <TableCell>{voo.destino}</TableCell>
                                         <TableCell>
                                             {new Date(voo.dataHora).toLocaleString('pt-BR')}
                                         </TableCell>
-                                        <TableCell>{voo.preco.toFixed(2)}</TableCell>
-                                        <TableCell>{voo.milhasNecessarias.toLocaleString()}</TableCell>
+                                        <TableCell>{voo.preco?.toFixed(2)}</TableCell>
+                                        <TableCell>{voo.milhasNecessarias?.toLocaleString()}</TableCell>
                                         <TableCell>
                                             <Button
                                                 variant="contained"
