@@ -3,13 +3,12 @@ import { reservasMock } from '../mocks/reservaMock';
 
 
 export const reservaService = {
-  async getReservas(filtros?: FiltroReservas): Promise<Reserva[]> {
+  async getReservas(clienteId: string, filtros?: FiltroReservas): Promise<Reserva[]> {
     await new Promise(resolve => setTimeout(resolve, 500));
     return reservasMock.filter(r => 
       !filtros?.estados || filtros.estados.includes(r.estado)
     );
   },
-
   async getReservaDetalhes(reservaId: string): Promise<Reserva> {
     await new Promise(resolve => setTimeout(resolve, 500));
     const reserva = reservasMock.find(r => r.id === reservaId);

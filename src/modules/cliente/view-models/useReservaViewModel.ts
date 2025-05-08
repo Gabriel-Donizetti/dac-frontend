@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../../shared/contexts/AuthContext';
 import { vooService } from '../services/vooService';
-import { DadosReserva } from '../models/VooTypes';
-import { Cliente } from '../../cliente/models/ClienteTypes';
 import { Voo } from '../../funcionario/models/VooTypes';
 import { Reserva } from '../models/ReservaTypes';
+import { Cliente } from '../../cliente/models/ClienteTypes';
 
 export function useReservaViewModel() {
     const navigate = useNavigate();
     const { vooId } = useParams();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
 
     // Estados
     const [origem, setOrigem] = useState('');
@@ -25,10 +24,10 @@ export function useReservaViewModel() {
     // Calculados
     const cliente = user?.role === 'client' ? user as Cliente : null;
     const saldoMilhas = cliente?.saldoMilhas || 0;
-    const valorTotal = vooSelecionado ? (vooSelecionado.preco ?? 0) * quantidade : 0;
-    const milhasTotais = vooSelecionado ? (vooSelecionado.milhasNecessarias ?? 0) * quantidade : 0;
+    const valorTotal = vooSelecionado ? vooSelecionado.preco * quantidade : 0;
+    const milhasTotais = vooSelecionado ? vooSelecionado.milhasNecessarias * quantidade : 0;
     const valorComMilhas = vooSelecionado ?
-        Math.max(0, valorTotal - (milhasUsadas * (vooSelecionado.preco ?? 0) / (vooSelecionado.milhasNecessarias ?? 1))) : 0;
+        Math.max(0, valorTotal - (milhasUsadas * vooSelecionado.preco / vooSelecionado.milhasNecessarias)) : 0;
 
     // Efeitos
     useEffect(() => {
@@ -81,39 +80,52 @@ export function useReservaViewModel() {
 
     const finalizarReserva = async () => {
         if (!vooSelecionado || !user) return;
-    
+
+        //levar essa parte pro back?
+        const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numeros = '0123456789';
+        let codigo = '';
+
+        for (let i = 0; i < 3; i++) {
+            codigo += letras.charAt(Math.floor(Math.random() * letras.length));
+        }
+        for (let i = 0; i < 3; i++) {
+            codigo += numeros.charAt(Math.floor(Math.random() * numeros.length));
+        }
         setLoading(true);
         try {
-            const dadosReserva: DadosReserva = {
-                vooId: vooSelecionado.codigo,
-                clienteId: user.id,
-                quantidade,
-                milhasUsadas
-            };
-    
-            const reserva: Reserva = {
-                id: dadosReserva.vooId,
-                codigo: dadosReserva.vooId,
-                dataHora: new Date().toISOString(), 
+            const dadosReserva: Reserva = {
+                id: Math.floor(1000 + Math.random() * 9000).toString(),
+                codigo: codigo,
+                dataHora: vooSelecionado.dataHora,
                 origem: vooSelecionado.origem,
                 destino: vooSelecionado.destino,
-                valorReais: vooSelecionado.valorReais * quantidade, 
-                milhasGastas: milhasUsadas, 
-                estado: "CRIADA" 
+                valorReais: valorComMilhas,
+                milhasGastas: milhasUsadas,
+                estado: 'CRIADA'
             };
-    
-            console.log(reserva); 
-    
-            const novaReserva = await vooService.mockFinalizarReserva(reserva);
-    
-            navigate(`/cliente/initial-page`);
+            console.log(dadosReserva)
+
+            const reserva = await vooService.mockFinalizarReserva(dadosReserva);
+
+            // await clienteService.debitarMilhas(user.id, milhasUsadas, 'Reserva de voo');
+
+            // VERIFICAR SE TEM MILHA PARA DESCONTAR
+
+            // Atualiza o estado local
+            updateUser({
+                ...user,
+                saldoMilhas: cliente?.saldoMilhas ?? - milhasUsadas
+            });
+            // Navega para a página de confirmação
+            // navigate(`/cliente/reservas/${reserva.codigo}`);
+            navigate(`/cliente/initial-page`)
         } catch (err) {
             setError('Erro ao finalizar reserva');
         } finally {
             setLoading(false);
         }
     };
-
 
     return {
         // Estados

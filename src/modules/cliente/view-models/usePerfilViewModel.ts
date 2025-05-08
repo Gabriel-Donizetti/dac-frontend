@@ -22,7 +22,8 @@ export function usePerfilViewModel() {
 
     setLoading(true);
     try {
-      const reservasData = await reservaService.getReservas({});
+      const reservasData = await reservaService.getReservas(user.id, {
+      });
       setReservas(reservasData);
     } catch (err) {
       setError('Erro ao carregar reservas');

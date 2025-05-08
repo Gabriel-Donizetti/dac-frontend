@@ -8,8 +8,8 @@ export type Voo = {
     poltronas: number;
     poltronasOcupadas: number;
     status: string;
-    preco?: number;
-    milhasNecessarias?: number;
+    preco: number;
+    milhasNecessarias: number;
     assentosDisponiveis?: number;
   };
   

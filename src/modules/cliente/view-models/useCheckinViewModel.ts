@@ -16,7 +16,7 @@ export function useCheckinViewModel() {
                 const limite = new Date(now.getTime() + 48 * 60 * 60 * 1000);
 
                 const todasReservas = await reservaService.getReservas(clienteId, {
-                    estados: ["CRIADA"],
+                    estados: ['CRIADA'],
                 });
 
                 const proximas = todasReservas.filter((r) => {
