@@ -21,6 +21,7 @@ import FlightIcon from "@mui/icons-material/Flight";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import LogoutIcon from "@mui/icons-material/Logout";
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
@@ -45,6 +46,7 @@ export default function Layout({ role }: LayoutProps) {
     { text: "Perfil", icon: <AccountCircleIcon />, path: "meu-perfil" },
     { text: "Reservar Voo", icon: <FlightIcon />, path: "reservar" },
     { text: "Milhas", icon: <AttachMoneyIcon />, path: "milhas" },
+    { text: "Checkin", icon: <FlightTakeoffIcon />, path: "checkin" }
   ];
 
   const menuFuncionarios = [
