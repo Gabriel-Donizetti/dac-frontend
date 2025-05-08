@@ -48,5 +48,37 @@ export const vooService = {
     async adicionar(voo: Voo): Promise<void> {
         voosMock.push(voo);
         localStorage.setItem("voos", JSON.stringify(voosMock));
+    },
+
+    async realizarVoo(codigoVoo: string): Promise<void> {
+        const voo = voosMock.find((v) => v.codigo === codigoVoo);
+
+        if (!voo) {
+            throw new Error("Voo não encontrado");
+        }
+
+        if (voo.status !== "CONFIRMADO") {
+            throw new Error("Somente voos confirmados podem ser realizados");
+        }
+
+        // Atualiza o voo para o estado REALIZADO
+        voo.status = "REALIZADO";
+
+        // Atualiza as reservas associadas ao voo
+        const reservasAssociadas = reservasMock.filter(r => r.codigo === voo.codigo);
+        reservasAssociadas.forEach(reserva => {
+            if (reserva.estado === "EMBARCADA") {
+                reserva.estado = "REALIZADA";
+            } else if (reserva.estado !== "REALIZADA") {
+                reserva.estado = "NÃO REALIZADA";
+            }
+        });
+
+        // Atualiza o voo e as reservas no localStorage
+        const vooIndex = voosMock.findIndex(v => v.codigo === codigoVoo);
+        voosMock[vooIndex] = voo;
+        localStorage.setItem("voos", JSON.stringify(voosMock));
+
+        localStorage.setItem("reservas", JSON.stringify(reservasMock));
     }
 };
