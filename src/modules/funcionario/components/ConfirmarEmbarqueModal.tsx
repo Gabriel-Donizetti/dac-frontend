@@ -24,7 +24,6 @@ const ConfirmarEmbarqueModal: React.FC<ConfirmarEmbarqueModalProps> = ({
   open,
   onClose,
   vooSelecionado,
-  reservas,
   onConfirmar,
 }) => {
   const [codigo, setCodigo] = useState('');

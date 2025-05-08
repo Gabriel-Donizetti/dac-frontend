@@ -28,6 +28,8 @@ export class VooService {
       poltronas: vooCadastro.poltronas,
       poltronasOcupadas: vooCadastro.poltronasOcupadas,
       status: vooCadastro.status,
+      preco: 0,
+      milhasNecessarias: 0
     };
 
     await this.adicionar(voo);
