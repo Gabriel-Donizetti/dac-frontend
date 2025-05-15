@@ -4,7 +4,7 @@ import { useAuth } from '../../../shared/contexts/AuthContext';
 import { vooService } from '../services/vooService';
 import { Voo } from '../../funcionario/models/VooTypes';
 import { Reserva } from '../models/ReservaTypes';
-import { Cliente } from '../../cliente/models/ClienteTypes';
+import { Cliente } from '../models/ClienteTypes';
 
 export function useReservaViewModel() {
     const navigate = useNavigate();

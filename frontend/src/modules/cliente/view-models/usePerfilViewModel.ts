@@ -4,7 +4,7 @@ import { useAuth } from '../../../shared/contexts/AuthContext';
 import { reservaService } from '../services/reservaService';
 import { Reserva } from '../models/ReservaTypes';
 import { Cliente } from '../models/ClienteTypes';
-import { useMilhas } from '../view-models/useClienteMilhasViewModel';
+import { useMilhas } from './useClienteMilhasViewModel';
 
 export function usePerfilViewModel() {
   const { user } = useAuth();
