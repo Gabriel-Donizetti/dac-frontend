@@ -1,10 +1,10 @@
-package com.dac.msauth;
+package com.example.wsauth.wsauth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MsauthApplicationTests {
+class WsauthApplicationTests {
 
 	@Test
 	void contextLoads() {

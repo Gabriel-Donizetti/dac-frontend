@@ -8,10 +8,10 @@
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.dac</groupId>
-	<artifactId>msauth</artifactId>
+	<groupId>com.example.wsauth</groupId>
+	<artifactId>wsauth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msauth</name>
+	<name>wsauth</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -32,7 +32,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
